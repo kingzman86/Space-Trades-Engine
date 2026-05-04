@@ -1,0 +1,408 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── DESIGN TOKENS ───────────────────────────── */
+:root {
+  --gold-primary:  #F5A623;
+  --gold-bright:   #FBBF24;
+  --gold-dark:     #B45309;
+  --space-black:   #0C0C0F;
+  --space-navy:    #141417;
+  --space-mid:     #1C1C21;
+  --space-border:  #2A2A32;
+  --candle-green:  #22C55E;
+  --candle-red:    #EF4444;
+  --star-white:    #F4F4F5;
+  --muted-text:    #A1A1AA;
+  --glow-gold:     rgba(245, 166, 35, 0.18);
+  --glow-green:    rgba(34, 197, 94, 0.14);
+
+  /* fonts */
+  --font-display: 'Sora', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+}
+
+/* ─── RESET & BASE ────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root { height: 100%; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--space-black);
+  color: var(--star-white);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+}
+
+/* ─── SCROLLBAR ───────────────────────────────── */
+::-webkit-scrollbar               { width: 5px; height: 5px; }
+::-webkit-scrollbar-track         { background: var(--space-navy); }
+::-webkit-scrollbar-thumb         { background: var(--space-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover   { background: #3F3F48; }
+
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ─── TYPOGRAPHY UTILITIES ────────────────────── */
+.text-primary { color: var(--star-white); }
+.text-muted   { color: var(--muted-text); }
+.text-profit  { color: var(--candle-green); }
+.text-loss    { color: var(--candle-red); }
+.text-gold    { color: var(--gold-primary); }
+
+/* Numbers — Sora bold for crisp rendering */
+.num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  -webkit-font-smoothing: subpixel-antialiased;
+  text-rendering: geometricPrecision;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Body numbers — DM Sans */
+.num-mono {
+  font-family: var(--font-body);
+  font-weight: 600;
+  -webkit-font-smoothing: subpixel-antialiased;
+  text-rendering: geometricPrecision;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Section label — Sora semibold, uppercase small */
+.section-title {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-primary);
+}
+
+/* ─── LAYOUT BLOCKS ───────────────────────────── */
+.panel {
+  background: var(--space-navy);
+  border: 1px solid var(--space-border);
+  border-radius: 12px;
+}
+
+.glass {
+  background: rgba(20, 20, 23, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--space-border);
+}
+
+.page-bg { background-color: var(--space-black); }
+
+/* ─── NAVBAR ──────────────────────────────────── */
+.nav-bg {
+  background: rgba(12, 12, 15, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ─── INPUTS ──────────────────────────────────── */
+.input-gold {
+  background: var(--space-mid);
+  border: 1px solid var(--space-border);
+  color: var(--star-white);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%;
+  outline: none;
+}
+.input-gold:focus {
+  border-color: var(--candle-green);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
+}
+.input-gold::placeholder { color: var(--muted-text); }
+textarea.input-gold { line-height: 1.6; }
+
+/* select arrow */
+select.input-gold {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2371717A' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+}
+select.input-gold option { background: var(--space-mid); color: var(--star-white); }
+
+/* ─── RANGE SLIDERS ───────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  width: 100%;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  background: var(--space-border);
+  border-radius: 4px;
+  height: 4px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--gold-primary);
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  margin-top: -6px;
+  box-shadow: 0 0 6px rgba(245, 166, 35, 0.5);
+  transition: box-shadow 0.15s;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 12px rgba(245, 166, 35, 0.7);
+}
+
+/* Gold-filled allocation slider (phase cards) */
+input[type="range"].alloc-slider {
+  background: linear-gradient(
+    to right,
+    var(--gold-primary) 0%,
+    var(--gold-primary) var(--alloc-fill, 0%),
+    var(--space-border) var(--alloc-fill, 0%),
+    var(--space-border) 100%
+  ) !important;
+  border-radius: 4px;
+  height: 4px;
+}
+input[type="range"].alloc-slider::-webkit-slider-runnable-track {
+  background: transparent !important;
+  height: 4px;
+  border-radius: 4px;
+}
+input[type="range"].alloc-slider::-webkit-slider-thumb {
+  background: var(--gold-primary) !important;
+  box-shadow: 0 0 8px rgba(245,166,35,0.6) !important;
+}
+
+/* Gold-filled leverage slider (phase cards) */
+input[type="range"].lev-slider {
+  background: linear-gradient(
+    to right,
+    var(--gold-primary) 0%,
+    var(--gold-primary) var(--lev-fill, 0%),
+    var(--space-border) var(--lev-fill, 0%),
+    var(--space-border) 100%
+  ) !important;
+  border-radius: 4px;
+  height: 4px;
+}
+input[type="range"].lev-slider::-webkit-slider-runnable-track {
+  background: transparent !important;
+  height: 4px;
+  border-radius: 4px;
+}
+input[type="range"].lev-slider::-webkit-slider-thumb {
+  background: var(--gold-primary) !important;
+  box-shadow: 0 0 8px rgba(245,166,35,0.6) !important;
+}
+
+/* Gain slider (phase cards) — color driven by --gain-color (green or red) */
+input[type="range"].gain-slider {
+  background: linear-gradient(
+    to right,
+    var(--gain-color, var(--candle-green)) 0%,
+    var(--gain-color, var(--candle-green)) var(--fill, 0%),
+    var(--space-border) var(--fill, 0%),
+    var(--space-border) 100%
+  ) !important;
+  border-radius: 4px;
+  height: 4px;
+}
+input[type="range"].gain-slider::-webkit-slider-runnable-track {
+  background: transparent !important;
+  height: 4px;
+  border-radius: 4px;
+}
+input[type="range"].gain-slider::-webkit-slider-thumb {
+  background: var(--gain-color, var(--candle-green)) !important;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--gain-color, var(--candle-green)) 60%, transparent) !important;
+}
+
+/* ─── BUTTONS ─────────────────────────────────── */
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+  color: #000;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 22px;
+  cursor: pointer;
+  transition: all 0.18s;
+  text-transform: uppercase;
+}
+.btn-gold:hover {
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold-primary));
+  box-shadow: 0 0 22px rgba(245, 166, 35, 0.4);
+  transform: translateY(-1px);
+}
+.btn-gold:active { transform: translateY(0); }
+
+/* ─── STAT CARD ───────────────────────────────── */
+.stat-card {
+  background: var(--space-navy);
+  border: 1px solid var(--space-border);
+  border-radius: 10px;
+  padding: 16px;
+  transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+}
+.stat-card:hover {
+  border-color: rgba(245, 166, 35, 0.5);
+  box-shadow: 0 0 18px rgba(245, 166, 35, 0.12);
+  transform: translateY(-2px);
+}
+
+/* ─── PHASE CARD ──────────────────────────────── */
+.phase-card {
+  background: var(--space-navy);
+  border: 1px solid var(--space-border);
+  border-left: 3px solid var(--candle-green);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.18s, border-color 0.18s;
+}
+.phase-card:hover {
+  box-shadow: 0 0 22px rgba(34, 197, 94, 0.14);
+  border-color: rgba(34, 197, 94, 0.35);
+}
+
+/* ─── STEP NUMBER BADGE ───────────────────────── */
+.step-num {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--candle-green);
+  color: #000;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── ALLOCATION BUTTONS ──────────────────────── */
+.alloc-btn {
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--space-border);
+  background: var(--space-mid);
+  color: var(--muted-text);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.alloc-btn:hover,
+.alloc-btn.active {
+  border-color: var(--candle-green);
+  color: var(--candle-green);
+  background: rgba(34, 197, 94, 0.1);
+}
+
+/* ─── PHASE COUNT BUTTONS ─────────────────────── */
+.phase-count-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--space-border);
+  background: var(--space-mid);
+  color: var(--muted-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.phase-count-btn:hover {
+  border-color: var(--candle-green);
+  color: var(--candle-green);
+  background: rgba(34, 197, 94, 0.1);
+}
+
+/* ─── STRATEGY PRESET PILLS ───────────────────── */
+.preset-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--space-border);
+  background: var(--space-mid);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+}
+.preset-pill:hover { border-color: var(--candle-green); background: rgba(34,197,94,0.06); }
+.preset-pill.active { border-color: var(--candle-green); background: rgba(34,197,94,0.12); }
+.preset-pill .pill-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-text);
+  transition: color 0.15s;
+}
+.preset-pill.active .pill-label,
+.preset-pill:hover .pill-label { color: var(--candle-green); }
+.preset-pill .pill-desc {
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: var(--muted-text);
+  margin-top: 2px;
+  opacity: 0.65;
+}
+
+/* ─── LIGHT THEME ─────────────────────────────── */
+[data-theme="light"] {
+  --space-black:  #F0F2F5;
+  --space-navy:   #FFFFFF;
+  --space-mid:    #F5F6FA;
+  --space-border: #D4D4D8;
+  --star-white:   #18181B;
+  --muted-text:   #52525B;
+}
+
+[data-theme="light"] body        { background-color: var(--space-black); color: var(--star-white); }
+[data-theme="light"] .nav-bg     { background: rgba(240,242,245,0.96); border-bottom-color: var(--space-border); }
+[data-theme="light"] .glass      { background: rgba(255,255,255,0.92); border-color: var(--space-border); box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+[data-theme="light"] .input-gold { background: #fff; border-color: var(--space-border); }
+[data-theme="light"] select.input-gold option { background: #fff; }
+[data-theme="light"] .alloc-btn  { background: #fff; }
+[data-theme="light"] .phase-count-btn { background: #fff; }
+[data-theme="light"] .preset-pill { background: #fff; }
+[data-theme="light"] .stat-card  { box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+
+/* Tailwind bg/border overrides */
+[data-theme="light"] .bg-space-black { background-color: var(--space-black) !important; }
+[data-theme="light"] .bg-space-navy  { background-color: var(--space-navy)  !important; }
+[data-theme="light"] .bg-space-mid   { background-color: var(--space-mid)   !important; }
+[data-theme="light"] .border-space-border { border-color: var(--space-border) !important; }
+[data-theme="light"] .text-\[\#F4F4F5\] { color: var(--star-white) !important; }
+[data-theme="light"] .hover\:text-primary:hover { color: var(--star-white) !important; }
+[data-theme="light"] canvas.star-field { display: none; }
+[data-theme="light"] .page-bg {
+  background: linear-gradient(160deg, #EEF1F7 0%, #E8ECF5 100%);
+}
