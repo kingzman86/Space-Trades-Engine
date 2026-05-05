@@ -2,13 +2,12 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import {
-  Loader2, Zap, Star, ChevronDown, ChevronUp, X,
-  BarChart2, BookOpen, GitCompare, Shield, Layers, TrendingUp, CheckCircle2
+  Loader2, Star, ChevronDown, ChevronUp, X,
+  BookOpen, GitCompare, Shield, Layers, TrendingUp, CheckCircle2, Zap
 } from 'lucide-react';
 import { ACCESS_CODES } from '../config';
 import StarField from './StarField';
 
-const MONTHLY_URL  = import.meta.env.VITE_LS_MONTHLY_URL  || '#';
 const LIFETIME_URL = import.meta.env.VITE_LS_LIFETIME_URL || '#';
 const SUPABASE_READY = !!(import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY);
 
@@ -73,14 +72,13 @@ const FAQS = [
   { q: 'Is this financial advice?', a: 'No. Space Trades is an educational simulation tool. It helps you think through trade ideas and understand compounding math — it does not tell you what to trade or predict market outcomes.' },
   { q: 'Do I need trading experience to use this?', a: 'Not at all. The tool is designed for all levels. Beginners use it to understand how compounding and leverage work. Experienced traders use it to plan and backtest ideas.' },
   { q: 'What happens to my data?', a: 'Everything is stored locally in your browser. Your scenarios, journal entries, and settings never leave your device unless you export them.' },
-  { q: 'Can I cancel the monthly plan anytime?', a: 'Yes. Cancel anytime from your Lemon Squeezy account. Your access code stays active until the end of your current billing period.' },
-  { q: 'What do I get with the Lifetime plan?', a: 'One payment, permanent access. You also get all future updates at no extra cost.' },
+  { q: 'Is this a one-time payment?', a: 'Yes. $197 one time — no subscriptions, no recurring charges, no surprises. Pay once and the tool is yours forever.' },
   { q: 'How do I get my access code?', a: 'Immediately after purchase, Lemon Squeezy emails you an access code. Enter it on this page to unlock the tool.' },
 ];
 
 /* ─── STEPS ───────────────────────────────────── */
 const STEPS = [
-  { num: '01', title: 'Pick Your Plan', desc: 'Choose monthly or lifetime access below. Checkout takes under 2 minutes.' },
+  { num: '01', title: 'Get Access', desc: 'One-time payment of $197. Checkout takes under 2 minutes.' },
   { num: '02', title: 'Get Your Code', desc: 'Your unique access code lands in your inbox instantly after payment.' },
   { num: '03', title: 'Start Trading Smarter', desc: 'Enter your code, open the calculator, and start planning your first compound sequence.' },
 ];
@@ -182,24 +180,15 @@ function HeroSection({ onEnterCode }) {
           so every decision is backed by <strong className="text-primary">math, not emotion.</strong>
         </p>
 
-        <div className="flex items-center justify-center gap-4 flex-wrap mb-10">
-          <a
-            href={MONTHLY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3.5 rounded-xl font-display font-black text-sm tracking-wider uppercase transition-all hover:scale-105"
-            style={{ background: '#22C55E', color: '#000', boxShadow: '0 0 24px rgba(34,197,94,0.3)' }}
-          >
-            <Zap size={15} /> Start for $15/mo
-          </a>
+        <div className="flex items-center justify-center mb-10">
           <a
             href={LIFETIME_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3.5 rounded-xl font-display font-black text-sm tracking-wider uppercase transition-all hover:scale-105"
-            style={{ background: '#F5A623', color: '#000', boxShadow: '0 0 24px rgba(245,166,35,0.3)' }}
+            className="flex items-center gap-2 px-8 py-4 rounded-xl font-display font-black text-base tracking-wider uppercase transition-all hover:scale-105"
+            style={{ background: '#F5A623', color: '#000', boxShadow: '0 0 32px rgba(245,166,35,0.4)' }}
           >
-            <Star size={15} /> Get Lifetime — $197
+            <Star size={16} /> Get Lifetime Access — $197
           </a>
         </div>
 
@@ -388,91 +377,58 @@ function PricingSection() {
       <div className="max-w-3xl mx-auto">
         <motion.div variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.4 }}
           className="text-center mb-12">
-          <h2 className="font-display font-black text-3xl sm:text-4xl mb-3">Choose Your Plan</h2>
-          <p className="font-body text-base" style={{ color: '#A1A1AA' }}>One tool. Two ways in. No hidden fees.</p>
+          <h2 className="font-display font-black text-3xl sm:text-4xl mb-3">Simple Pricing</h2>
+          <p className="font-body text-base" style={{ color: '#A1A1AA' }}>One price. Full access. Forever.</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-
-          {/* Monthly */}
-          <motion.div
-            variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.3 }}
-            className="rounded-2xl p-7 flex flex-col"
-            style={{ background: 'var(--space-navy)', border: '1px solid rgba(34,197,94,0.35)' }}
+        <motion.div
+          variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.3 }}
+          className="max-w-md mx-auto rounded-2xl p-8 flex flex-col relative overflow-hidden"
+          style={{ background: 'var(--space-navy)', border: '1px solid rgba(245,166,35,0.5)', boxShadow: '0 0 48px rgba(245,166,35,0.10)' }}
+        >
+          <div
+            className="absolute top-4 right-4 px-2.5 py-1 rounded-full text-[10px] font-display font-black tracking-widest uppercase"
+            style={{ background: 'rgba(245,166,35,0.2)', color: '#F5A623', border: '1px solid rgba(245,166,35,0.4)' }}
           >
-            <div className="flex items-center gap-2 mb-5">
-              <div className="w-9 h-9 rounded-lg flex items-center justify-center"
-                style={{ background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)' }}>
-                <Zap size={16} style={{ color: '#22C55E' }} />
-              </div>
-              <span className="font-display font-black text-sm tracking-widest uppercase" style={{ color: '#22C55E' }}>Monthly</span>
+            Lifetime Access
+          </div>
+          <div className="flex items-center gap-2 mb-6">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+              style={{ background: 'rgba(245,166,35,0.15)', border: '1px solid rgba(245,166,35,0.3)' }}>
+              <Star size={18} style={{ color: '#F5A623' }} />
             </div>
-            <div className="mb-5">
-              <span className="font-display font-black text-4xl text-primary">$15</span>
-              <span className="font-body text-base ml-2" style={{ color: '#A1A1AA' }}>/month</span>
-            </div>
-            <ul className="flex flex-col gap-3 mb-7 flex-1">
-              {['Full access to all 6 tools', 'Cancel anytime', 'Access code delivered by email', 'All future updates included'].map(f => (
-                <li key={f} className="flex items-start gap-2.5 font-body font-medium text-sm" style={{ color: '#D4D4D8' }}>
-                  <CheckCircle2 size={15} className="flex-shrink-0 mt-0.5" style={{ color: '#22C55E' }} /> {f}
-                </li>
-              ))}
-            </ul>
-            <a
-              href={MONTHLY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full py-3 rounded-xl text-center font-display font-black text-sm tracking-wider uppercase transition-all hover:opacity-90 block"
-              style={{ background: '#22C55E', color: '#000' }}
-            >
-              Get Monthly Access
-            </a>
-          </motion.div>
-
-          {/* Lifetime */}
-          <motion.div
-            variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.3, delay: 0.1 }}
-            className="rounded-2xl p-7 flex flex-col relative overflow-hidden"
-            style={{ background: 'var(--space-navy)', border: '1px solid rgba(245,166,35,0.5)', boxShadow: '0 0 32px rgba(245,166,35,0.08)' }}
+            <span className="font-display font-black text-sm tracking-widest uppercase" style={{ color: '#F5A623' }}>Space Trades</span>
+          </div>
+          <div className="mb-2">
+            <span className="font-display font-black text-5xl text-primary">$197</span>
+            <span className="font-body text-base ml-2" style={{ color: '#A1A1AA' }}>one-time</span>
+          </div>
+          <p className="font-body font-medium text-sm mb-6" style={{ color: '#22C55E' }}>
+            Pay once. Use forever. No subscriptions ever.
+          </p>
+          <ul className="flex flex-col gap-3 mb-8">
+            {[
+              'Full access to all 6 tools',
+              'Lifetime access — never pay again',
+              'Access code delivered to your email instantly',
+              'All future updates included free',
+              '7-day money back guarantee',
+            ].map(f => (
+              <li key={f} className="flex items-start gap-2.5 font-body font-medium text-base" style={{ color: '#D4D4D8' }}>
+                <CheckCircle2 size={16} className="flex-shrink-0 mt-0.5" style={{ color: '#F5A623' }} /> {f}
+              </li>
+            ))}
+          </ul>
+          <a
+            href={LIFETIME_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-3.5 rounded-xl text-center font-display font-black text-base tracking-wider uppercase transition-all hover:opacity-90 block"
+            style={{ background: '#F5A623', color: '#000', boxShadow: '0 0 24px rgba(245,166,35,0.3)' }}
           >
-            <div
-              className="absolute top-4 right-4 px-2.5 py-1 rounded-full text-[10px] font-display font-black tracking-widest uppercase"
-              style={{ background: 'rgba(245,166,35,0.2)', color: '#F5A623', border: '1px solid rgba(245,166,35,0.4)' }}
-            >
-              Best Value
-            </div>
-            <div className="flex items-center gap-2 mb-5">
-              <div className="w-9 h-9 rounded-lg flex items-center justify-center"
-                style={{ background: 'rgba(245,166,35,0.15)', border: '1px solid rgba(245,166,35,0.3)' }}>
-                <Star size={16} style={{ color: '#F5A623' }} />
-              </div>
-              <span className="font-display font-black text-sm tracking-widest uppercase" style={{ color: '#F5A623' }}>Lifetime</span>
-            </div>
-            <div className="mb-1">
-              <span className="font-display font-black text-4xl text-primary">$197</span>
-              <span className="font-body text-base ml-2" style={{ color: '#A1A1AA' }}>one-time</span>
-            </div>
-            <p className="font-body text-xs mb-5" style={{ color: '#22C55E' }}>
-              = just 13 months of monthly — then free forever
-            </p>
-            <ul className="flex flex-col gap-3 mb-7 flex-1">
-              {['Full access to all 6 tools', 'Lifetime access — never pay again', 'Access code delivered by email', 'All future updates free forever'].map(f => (
-                <li key={f} className="flex items-start gap-2.5 font-body font-medium text-sm" style={{ color: '#D4D4D8' }}>
-                  <CheckCircle2 size={15} className="flex-shrink-0 mt-0.5" style={{ color: '#F5A623' }} /> {f}
-                </li>
-              ))}
-            </ul>
-            <a
-              href={LIFETIME_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full py-3 rounded-xl text-center font-display font-black text-sm tracking-wider uppercase transition-all hover:opacity-90 block"
-              style={{ background: '#F5A623', color: '#000' }}
-            >
-              Get Lifetime Access
-            </a>
-          </motion.div>
-        </div>
+            Get Lifetime Access — $197
+          </a>
+        </motion.div>
       </div>
     </section>
   );
@@ -575,26 +531,17 @@ function FinalCTA({ onEnterCode }) {
           </h2>
           <p className="font-body text-lg leading-relaxed mb-8" style={{ color: '#D4D4D8' }}>
             Join traders who stopped guessing and started compounding with precision.
-            Pick your plan and get your access code in minutes.
+            One payment. Full access. Forever.
           </p>
-          <div className="flex items-center justify-center gap-4 flex-wrap mb-6">
-            <a
-              href={MONTHLY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl font-display font-black text-sm tracking-wider uppercase transition-all hover:scale-105"
-              style={{ background: '#22C55E', color: '#000', boxShadow: '0 0 24px rgba(34,197,94,0.3)' }}
-            >
-              <Zap size={15} /> Start for $15/mo
-            </a>
+          <div className="flex items-center justify-center mb-6">
             <a
               href={LIFETIME_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl font-display font-black text-sm tracking-wider uppercase transition-all hover:scale-105"
-              style={{ background: '#F5A623', color: '#000', boxShadow: '0 0 24px rgba(245,166,35,0.3)' }}
+              className="flex items-center gap-2 px-8 py-4 rounded-xl font-display font-black text-base tracking-wider uppercase transition-all hover:scale-105"
+              style={{ background: '#F5A623', color: '#000', boxShadow: '0 0 32px rgba(245,166,35,0.4)' }}
             >
-              <Star size={15} /> Get Lifetime — $197
+              <Star size={16} /> Get Lifetime Access — $197
             </a>
           </div>
           <button
