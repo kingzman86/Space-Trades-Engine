@@ -3,12 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import {
   Loader2, Star, ChevronDown, ChevronUp, X,
-  BookOpen, GitCompare, Shield, Layers, TrendingUp, CheckCircle2, Zap
+  BookOpen, GitCompare, Shield, Layers, TrendingUp, CheckCircle2, Zap, Send
 } from 'lucide-react';
 import { ACCESS_CODES } from '../config';
 import StarField from './StarField';
 
-const LIFETIME_URL = import.meta.env.VITE_LS_LIFETIME_URL || '#';
+const LIFETIME_URL   = import.meta.env.VITE_LS_LIFETIME_URL  || '#';
+const TELEGRAM_BOT   = import.meta.env.VITE_TELEGRAM_BOT_NAME || '';
 const SUPABASE_READY = !!(import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY);
 
 /* ─── FADE UP VARIANT ─────────────────────────── */
@@ -100,6 +101,7 @@ export default function SalesPage({ onUnlock }) {
         <FeaturesSection />
         <HowItWorksSection />
         <ForWhomSection />
+        <TelegramSection onUnlock={onUnlock} />
         <PricingSection />
         <FAQSection />
         <FinalCTA onEnterCode={() => setCodeModalOpen(true)} />
@@ -363,6 +365,127 @@ function ForWhomSection() {
               </div>
             </motion.div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── TELEGRAM ────────────────────────────────── */
+function TelegramSection({ onUnlock }) {
+  const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const containerRef = useRef(null);
+
+  const loadWidget = () => {
+    if (mounted || !TELEGRAM_BOT) return;
+    setMounted(true);
+
+    window.onTelegramAuth = async (user) => {
+      setLoading(true);
+      try {
+        const res = await fetch('/api/telegram-verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(user),
+        });
+        const data = await res.json();
+
+        if (data.member) {
+          // Grant access for 24 hours — forces re-verify daily
+          localStorage.setItem('st_access', 'true');
+          localStorage.setItem('st_telegram_id', String(user.id));
+          localStorage.setItem('st_telegram_expires', String(Date.now() + 24 * 60 * 60 * 1000));
+          toast.success('Telegram membership verified! Welcome 🚀');
+          setTimeout(() => onUnlock(), 800);
+        } else {
+          toast.error('You need to be a member of the Space Trades Telegram group to get free access.');
+        }
+      } catch {
+        toast.error('Verification failed — please try again');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const script = document.createElement('script');
+    script.src = 'https://telegram.org/js/telegram-widget.js?22';
+    script.setAttribute('data-telegram-login', TELEGRAM_BOT);
+    script.setAttribute('data-size', 'large');
+    script.setAttribute('data-onauth', 'onTelegramAuth(user)');
+    script.setAttribute('data-request-access', 'write');
+    script.async = true;
+    if (containerRef.current) containerRef.current.appendChild(script);
+  };
+
+  if (!TELEGRAM_BOT) return null;
+
+  return (
+    <section className="py-10 px-4">
+      <div className="max-w-3xl mx-auto">
+        <motion.div
+          variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.4 }}
+          className="rounded-2xl p-8"
+          style={{ background: 'rgba(0,136,204,0.08)', border: '1px solid rgba(0,136,204,0.3)' }}
+        >
+          <div className="flex items-start gap-5">
+            <div
+              className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ background: 'rgba(0,136,204,0.15)', border: '1px solid rgba(0,136,204,0.3)' }}
+            >
+              <Send size={20} style={{ color: '#0088CC' }} />
+            </div>
+            <div className="flex-1">
+              <div
+                className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-display font-black tracking-widest uppercase mb-2"
+                style={{ background: 'rgba(34,197,94,0.15)', color: '#22C55E', border: '1px solid rgba(34,197,94,0.3)' }}
+              >
+                Free Access
+              </div>
+              <h3 className="font-display font-black text-xl text-primary mb-2">
+                Already in the Space Trades Telegram Group?
+              </h3>
+              <p className="font-body font-medium text-base leading-relaxed mb-5" style={{ color: '#D4D4D8' }}>
+                Group members get full access for free. Verify your membership below — takes 5 seconds.
+                Access renews daily as long as you stay in the group.
+              </p>
+
+              {loading ? (
+                <div className="flex items-center gap-2 font-body font-medium text-sm" style={{ color: '#A1A1AA' }}>
+                  <Loader2 size={16} className="animate-spin" /> Verifying your membership...
+                </div>
+              ) : !mounted ? (
+                <button
+                  onClick={loadWidget}
+                  className="flex items-center gap-2 px-5 py-3 rounded-xl font-display font-bold text-sm tracking-wider uppercase transition-all hover:scale-105"
+                  style={{ background: '#0088CC', color: '#fff', boxShadow: '0 0 20px rgba(0,136,204,0.3)' }}
+                >
+                  <Send size={14} /> Verify Telegram Membership
+                </button>
+              ) : (
+                <div ref={containerRef} className="flex items-center" />
+              )}
+
+              <p className="font-body text-xs mt-3" style={{ color: '#71717A' }}>
+                Not in the group yet?{' '}
+                <a
+                  href="https://t.me/your_group_link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-2"
+                  style={{ color: '#0088CC' }}
+                >
+                  Join the Space Trades Telegram group
+                </a>
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="flex items-center gap-4 my-8">
+          <div className="flex-1 h-px" style={{ background: 'var(--space-border)' }} />
+          <span className="font-display font-black text-sm tracking-widest uppercase" style={{ color: '#A1A1AA' }}>OR</span>
+          <div className="flex-1 h-px" style={{ background: 'var(--space-border)' }} />
         </div>
       </div>
     </section>
