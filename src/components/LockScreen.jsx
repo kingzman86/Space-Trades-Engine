@@ -2,11 +2,12 @@ import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { Loader2, Zap, Star } from 'lucide-react';
-import { supabase } from '../lib/supabase';
 import StarField from './StarField';
+import { ACCESS_CODES } from '../config';
 
 const MONTHLY_URL  = import.meta.env.VITE_LS_MONTHLY_URL  || '#';
 const LIFETIME_URL = import.meta.env.VITE_LS_LIFETIME_URL || '#';
+const SUPABASE_READY = !!(import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY);
 
 export default function LockScreen({ onUnlock }) {
   const [code, setCode]             = useState('');
@@ -27,34 +28,43 @@ export default function LockScreen({ onUnlock }) {
 
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('access_codes')
-        .select('status, expires_at, plan_type')
-        .eq('code', trimmed)
-        .single();
-
-      if (error || !data) {
-        triggerShake('Invalid access code');
-        return;
-      }
-
-      if (data.status !== 'active') {
-        triggerShake(
-          data.status === 'expired'
-            ? 'Your subscription has expired — please renew to continue'
-            : 'This access code is no longer valid'
-        );
-        return;
-      }
-
-      if (data.plan_type === 'monthly' && data.expires_at) {
-        if (new Date(data.expires_at) < new Date()) {
-          await supabase
-            .from('access_codes')
-            .update({ status: 'expired' })
-            .eq('code', trimmed);
-          triggerShake('Your subscription has expired — please renew to continue');
+      if (!SUPABASE_READY) {
+        // Fallback: check hardcoded codes until Supabase is configured
+        if (!ACCESS_CODES.includes(trimmed)) {
+          triggerShake('Invalid access code');
           return;
+        }
+      } else {
+        const { supabase } = await import('../lib/supabase');
+        const { data, error } = await supabase
+          .from('access_codes')
+          .select('status, expires_at, plan_type')
+          .eq('code', trimmed)
+          .single();
+
+        if (error || !data) {
+          triggerShake('Invalid access code');
+          return;
+        }
+
+        if (data.status !== 'active') {
+          triggerShake(
+            data.status === 'expired'
+              ? 'Your subscription has expired — please renew to continue'
+              : 'This access code is no longer valid'
+          );
+          return;
+        }
+
+        if (data.plan_type === 'monthly' && data.expires_at) {
+          if (new Date(data.expires_at) < new Date()) {
+            await supabase
+              .from('access_codes')
+              .update({ status: 'expired' })
+              .eq('code', trimmed);
+            triggerShake('Your subscription has expired — please renew to continue');
+            return;
+          }
         }
       }
 
