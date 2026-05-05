@@ -101,7 +101,6 @@ export default function SalesPage({ onUnlock }) {
         <HowItWorksSection />
         <ForWhomSection />
         <PricingSection />
-        <GuaranteeSection />
         <FAQSection />
         <FinalCTA onEnterCode={() => setCodeModalOpen(true)} />
 
@@ -412,7 +411,6 @@ function PricingSection() {
               'Lifetime access — never pay again',
               'Access code delivered to your email instantly',
               'All future updates included free',
-              '7-day money back guarantee',
             ].map(f => (
               <li key={f} className="flex items-start gap-2.5 font-body font-medium text-base" style={{ color: '#D4D4D8' }}>
                 <CheckCircle2 size={16} className="flex-shrink-0 mt-0.5" style={{ color: '#F5A623' }} /> {f}
@@ -434,29 +432,6 @@ function PricingSection() {
   );
 }
 
-/* ─── GUARANTEE ───────────────────────────────── */
-function GuaranteeSection() {
-  return (
-    <section className="py-10 px-4">
-      <div className="max-w-3xl mx-auto">
-        <motion.div
-          variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.4 }}
-          className="rounded-2xl p-8 flex items-start gap-6"
-          style={{ background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.2)' }}
-        >
-          <div className="text-4xl flex-shrink-0">🛡️</div>
-          <div>
-            <h3 className="font-display font-black text-xl text-primary mb-2">7-Day Money Back Guarantee</h3>
-            <p className="font-body font-medium text-base leading-relaxed" style={{ color: '#D4D4D8' }}>
-              Try Space Trades for 7 days. If it doesn't help you trade with more clarity and confidence,
-              email us for a full refund — no questions asked. You have nothing to lose.
-            </p>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
 
 /* ─── FAQ ─────────────────────────────────────── */
 function FAQSection() {
