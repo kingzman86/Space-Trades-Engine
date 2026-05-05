@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { AnimatePresence } from 'framer-motion';
-import LockScreen from './components/LockScreen';
+import SalesPage from './components/SalesPage';
 import Dashboard from './components/Dashboard';
 import { ThemeContext } from './context/ThemeContext';
 import { useThemeState } from './hooks/useThemeState';
@@ -37,7 +37,7 @@ export default function App() {
         {unlocked ? (
           <Dashboard key="dashboard" onLock={() => setUnlocked(false)} />
         ) : (
-          <LockScreen key="lock" onUnlock={() => setUnlocked(true)} />
+          <SalesPage key="sales" onUnlock={() => setUnlocked(true)} />
         )}
       </AnimatePresence>
     </ThemeContext.Provider>
