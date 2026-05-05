@@ -490,9 +490,9 @@ function GuaranteeSection() {
         >
           <div className="text-4xl flex-shrink-0">🛡️</div>
           <div>
-            <h3 className="font-display font-black text-xl text-primary mb-2">30-Day Money Back Guarantee</h3>
+            <h3 className="font-display font-black text-xl text-primary mb-2">7-Day Money Back Guarantee</h3>
             <p className="font-body font-medium text-base leading-relaxed" style={{ color: '#D4D4D8' }}>
-              Try Space Trades for 30 days. If it doesn't help you trade with more clarity and confidence,
+              Try Space Trades for 7 days. If it doesn't help you trade with more clarity and confidence,
               email us for a full refund — no questions asked. You have nothing to lose.
             </p>
           </div>
