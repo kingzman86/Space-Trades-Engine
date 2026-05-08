@@ -452,8 +452,11 @@ export default function PhaseCard({
                   </AnimatePresence>
 
                   {/* Learn banner */}
-                  <div
-                    className="flex items-center justify-between px-4 py-3 rounded-xl"
+                  <a
+                    href="https://www.spacetrades.net"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between px-4 py-3 rounded-xl transition-all hover:opacity-80"
                     style={{ background: 'var(--space-mid)', border: '1px solid var(--space-border)' }}
                   >
                     <span className="font-body font-bold text-sm" style={{ color: 'var(--star-white)' }}>
@@ -462,7 +465,7 @@ export default function PhaseCard({
                     <span className="flex items-center gap-1.5 font-display font-black text-xs tracking-wider flex-shrink-0 ml-3" style={{ color: '#22C55E' }}>
                       Learn the full system <ExternalLink size={12} />
                     </span>
-                  </div>
+                  </a>
 
                   <p className="text-xs font-bold flex items-center gap-1.5" style={{ color: 'var(--muted-text)' }}>
                     <AlertTriangle size={11} />
