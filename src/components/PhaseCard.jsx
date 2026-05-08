@@ -1,6 +1,7 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import clsx from 'clsx';
-import { Pencil, TrendingUp, TrendingDown, ArrowUp, ArrowDown, AlertTriangle, ChevronDown } from 'lucide-react';
+import { Pencil, TrendingUp, TrendingDown, ArrowUp, ArrowDown, AlertTriangle, ChevronDown, Shield, Target, Scale, Info, ExternalLink, Layers, Zap } from 'lucide-react';
 import { formatCurrency } from '../utils/formatters';
 
 const ALLOC_PRESETS = [0, 25, 50, 75, 100];
@@ -26,6 +27,10 @@ export default function PhaseCard({
   riskPct = 2, direction = 'long', pair = 'BTC/USDT', notes = '',
   onUpdate, onCapitalChange, delay = 0
 }) {
+  const [riskEngineOpen, setRiskEngineOpen] = useState(false);
+  const [advOpen,        setAdvOpen]        = useState(false);
+  const [entryPrice,     setEntryPrice]     = useState('');
+
   const effectivePct = feeMode === 'pct' ? (tradeFee ?? feePct) : 0;
   const allocated   = startCapital * (allocationPct / 100);
   const unallocated = startCapital - allocated;
@@ -280,20 +285,193 @@ export default function PhaseCard({
             </span>
           </div>
 
-          {/* Risk Engine SL row */}
-          <div
-            className="flex items-center justify-between rounded-lg px-3 py-2"
-            style={{ background: 'var(--space-black)', border: `1px solid ${riskInfo.borderColor}` }}
+          {/* Risk Engine — clickable row that expands inline */}
+          <button
+            onClick={() => setRiskEngineOpen(o => !o)}
+            className="w-full flex items-center justify-between rounded-lg px-3 py-2.5 transition-opacity hover:opacity-80"
+            style={{ background: 'var(--space-black)', border: `1.5px solid ${riskInfo.borderColor}` }}
           >
-            <div className="flex items-center gap-1.5">
-              <span className="text-[9px] font-display font-black uppercase tracking-wider" style={{ color: riskInfo.color }}>
-                ⚠ Risk Engine
+            <div className="flex items-center gap-2">
+              <Shield size={14} style={{ color: riskInfo.color }} />
+              <span className="text-sm font-display font-black uppercase tracking-wider" style={{ color: riskInfo.color }}>
+                Risk Engine
               </span>
             </div>
-            <span className="num font-black text-xs" style={{ color: riskInfo.color }}>
-              {slOnPosition.toFixed(2)}% SL
-            </span>
-          </div>
+            <div className="flex items-center gap-2">
+              <span className="num font-black text-sm" style={{ color: riskInfo.color }}>
+                {slOnPosition.toFixed(2)}% SL
+              </span>
+              <motion.div animate={{ rotate: riskEngineOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                <ChevronDown size={14} style={{ color: riskInfo.color }} />
+              </motion.div>
+            </div>
+          </button>
+
+          {/* Expanded Risk Engine panel */}
+          <AnimatePresence initial={false}>
+            {riskEngineOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25, ease: 'easeInOut' }}
+                style={{ overflow: 'hidden' }}
+              >
+                <div className="pt-3 flex flex-col gap-3">
+
+                  {/* Trade Risk Summary card */}
+                  <div className="rounded-xl p-4" style={{ background: 'rgba(239,68,68,0.07)', border: '1.5px solid rgba(239,68,68,0.25)' }}>
+                    <p className="font-display font-black text-xs tracking-widest uppercase mb-3" style={{ color: '#EF4444' }}>
+                      Trade Risk Summary
+                    </p>
+                    <div className="grid grid-cols-2 gap-y-3">
+                      <div>
+                        <p className="text-xs font-bold" style={{ color: 'var(--muted-text)' }}>You are risking</p>
+                        <p className="font-mono font-black text-xl" style={{ color: '#EF4444' }}>{formatCurrency(maxLossDollar)}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold" style={{ color: 'var(--muted-text)' }}>Stop must be within</p>
+                        <p className="font-mono font-black text-xl" style={{ color: '#EF4444' }}>{slOnPosition.toFixed(2)}%</p>
+                      </div>
+                      <div className="col-span-2">
+                        <p className="text-xs font-bold" style={{ color: 'var(--muted-text)' }}>Risk / Reward</p>
+                        {(() => {
+                          const rr = slOnPosition > 0 ? gainPct / slOnPosition : 0;
+                          const rrColor = rr >= 2 ? '#22C55E' : rr >= 1 ? '#F5A623' : '#EF4444';
+                          return <p className="font-mono font-black text-xl" style={{ color: rrColor }}>1:{rr.toFixed(2)}</p>;
+                        })()}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Metric rows */}
+                  {[
+                    {
+                      icon: AlertTriangle, iconColor: '#F5A623',
+                      title: 'Max Risk $', value: formatCurrency(maxLossDollar), valueColor: '#EF4444',
+                      desc: 'The dollar amount you could lose if the stop loss is hit.',
+                    },
+                    {
+                      icon: Target, iconColor: '#EF4444',
+                      title: 'Required Stop Loss Distance', value: `${slOnPosition.toFixed(2)}%`, valueColor: '#EF4444',
+                      desc: 'How far your stop must be from entry to stay within your selected max loss.',
+                    },
+                    {
+                      icon: Scale, iconColor: '#22C55E',
+                      title: 'Risk / Reward',
+                      value: (() => { const rr = slOnPosition > 0 ? gainPct / slOnPosition : 0; return `1:${rr.toFixed(2)}`; })(),
+                      valueColor: (() => { const rr = slOnPosition > 0 ? gainPct / slOnPosition : 0; return rr >= 2 ? '#22C55E' : rr >= 1 ? '#F5A623' : '#EF4444'; })(),
+                      desc: 'Compares your projected profit target to your selected max loss.',
+                      tip: 'High reward setups usually require precision entries. Tighter stops can increase the chance of early stop-outs.',
+                    },
+                  ].map(({ icon: Icon, iconColor, title, value, valueColor, desc, tip }) => (
+                    <RiskMetricRow key={title} icon={Icon} iconColor={iconColor} title={title} value={value} valueColor={valueColor} desc={desc} tip={tip} />
+                  ))}
+
+                  {/* Advanced Details toggle */}
+                  <button
+                    onClick={() => setAdvOpen(o => !o)}
+                    className="w-full flex items-center justify-between py-2.5 transition-opacity hover:opacity-70"
+                    style={{ borderTop: '1px solid var(--space-border)' }}
+                  >
+                    <span className="font-display font-bold text-sm tracking-widest uppercase" style={{ color: 'var(--muted-text)' }}>
+                      Advanced Details
+                    </span>
+                    <motion.div animate={{ rotate: advOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                      <ChevronDown size={15} style={{ color: 'var(--muted-text)' }} />
+                    </motion.div>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {advOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        style={{ overflow: 'hidden' }}
+                      >
+                        <div className="flex flex-col gap-3 pb-1">
+
+                          {/* Suggested Position Size */}
+                          <div className="rounded-xl p-4 flex items-start gap-3" style={{ background: 'rgba(59,130,246,0.08)', border: '1.5px solid rgba(59,130,246,0.35)' }}>
+                            <Layers size={18} style={{ color: '#3B82F6', flexShrink: 0, marginTop: 2 }} />
+                            <div className="flex-1 min-w-0">
+                              <p className="font-display font-black text-sm" style={{ color: '#3B82F6' }}>Suggested Position Size</p>
+                              <p className="text-xs font-bold mt-0.5 leading-snug" style={{ color: 'var(--muted-text)' }}>Optimal size to match your risk and stop settings</p>
+                            </div>
+                            <p className="font-mono font-black text-lg flex-shrink-0" style={{ color: '#3B82F6' }}>{formatCurrency(position)}</p>
+                          </div>
+
+                          {/* Entry Price input */}
+                          <div className="flex items-start gap-3">
+                            <Zap size={18} style={{ color: '#F5A623', flexShrink: 0, marginTop: 32 }} />
+                            <div className="flex-1 min-w-0">
+                              <p className="font-display font-bold text-sm tracking-wider uppercase" style={{ color: 'var(--star-white)' }}>
+                                Entry Price <span className="normal-case tracking-normal font-body font-normal text-xs" style={{ color: 'var(--muted-text)' }}>(Optional)</span>
+                              </p>
+                              <p className="text-xs font-bold mt-0.5" style={{ color: 'var(--muted-text)' }}>Required to calculate liquidation level</p>
+                              <div
+                                className="flex items-center gap-2 px-3 py-2.5 rounded-lg mt-2"
+                                style={{ border: '1.5px solid #F5A623', background: 'var(--space-mid)' }}
+                              >
+                                <span className="font-mono text-sm font-bold" style={{ color: 'var(--muted-text)' }}>$</span>
+                                <input
+                                  type="number"
+                                  value={entryPrice}
+                                  onChange={e => setEntryPrice(e.target.value)}
+                                  placeholder="e.g. 45000"
+                                  className="flex-1 bg-transparent outline-none font-mono text-sm font-bold"
+                                  style={{ color: 'var(--muted-text)', minWidth: 0 }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Exact SL + target prices if entry filled */}
+                          {parseFloat(entryPrice) > 0 && slOnPosition > 0 && (() => {
+                            const ep = parseFloat(entryPrice);
+                            const slPrice  = direction === 'short' ? ep * (1 + slOnPosition / 100) : ep * (1 - slOnPosition / 100);
+                            const tgtPrice = direction === 'short' ? ep * (1 - gainPct / 100) : ep * (1 + gainPct / 100);
+                            return (
+                              <div className="grid grid-cols-2 gap-3">
+                                <div className="rounded-lg p-3" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)' }}>
+                                  <p className="text-xs font-bold mb-1" style={{ color: 'var(--muted-text)' }}>Stop Loss Price</p>
+                                  <p className="font-mono font-black text-base" style={{ color: '#EF4444' }}>${slPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                </div>
+                                <div className="rounded-lg p-3" style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.25)' }}>
+                                  <p className="text-xs font-bold mb-1" style={{ color: 'var(--muted-text)' }}>Target Price</p>
+                                  <p className="font-mono font-black text-base" style={{ color: '#22C55E' }}>${tgtPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                </div>
+                              </div>
+                            );
+                          })()}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* Learn banner */}
+                  <div
+                    className="flex items-center justify-between px-4 py-3 rounded-xl"
+                    style={{ background: 'var(--space-mid)', border: '1px solid var(--space-border)' }}
+                  >
+                    <span className="font-body font-bold text-sm" style={{ color: 'var(--star-white)' }}>
+                      This is how professionals manage risk
+                    </span>
+                    <span className="flex items-center gap-1.5 font-display font-black text-xs tracking-wider flex-shrink-0 ml-3" style={{ color: '#22C55E' }}>
+                      Learn the full system <ExternalLink size={12} />
+                    </span>
+                  </div>
+
+                  <p className="text-xs font-bold flex items-center gap-1.5" style={{ color: 'var(--muted-text)' }}>
+                    <AlertTriangle size={11} />
+                    Simulation only — not live trade execution.
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* ── Fee Mode ── */}
@@ -408,6 +586,36 @@ export default function PhaseCard({
         </div>
       </div>
     </motion.div>
+  );
+}
+
+function RiskMetricRow({ icon: Icon, iconColor, title, value, valueColor, desc, tip }) {
+  const [tipOpen, setTipOpen] = useState(false);
+  return (
+    <div className="flex gap-3 py-3" style={{ borderBottom: '1px solid var(--space-border)' }}>
+      <Icon size={18} style={{ color: iconColor, flexShrink: 0, marginTop: 2 }} />
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-1.5">
+          <span className="font-display font-bold text-sm" style={{ color: 'var(--star-white)' }}>{title}</span>
+          {tip && (
+            <button onClick={() => setTipOpen(o => !o)} style={{ color: 'var(--muted-text)' }}>
+              <Info size={13} />
+            </button>
+          )}
+        </div>
+        <p className="text-xs font-bold mt-0.5 leading-snug" style={{ color: 'var(--muted-text)' }}>{desc}</p>
+        <AnimatePresence>
+          {tip && tipOpen && (
+            <motion.p
+              initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
+              className="text-xs font-bold mt-1.5 px-2 py-1.5 rounded overflow-hidden leading-snug"
+              style={{ background: 'var(--space-mid)', color: 'var(--muted-text)' }}
+            >{tip}</motion.p>
+          )}
+        </AnimatePresence>
+      </div>
+      <span className="font-mono font-black text-base flex-shrink-0 self-start" style={{ color: valueColor }}>{value}</span>
+    </div>
   );
 }
 

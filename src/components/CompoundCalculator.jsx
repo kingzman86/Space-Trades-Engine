@@ -600,7 +600,7 @@ function PerfTooltip({ active, payload, label }) {
       background: '#0C0C0F', border: '1px solid #2A2A32', borderRadius: 10,
       padding: '10px 16px', fontFamily: PERF_FONT, boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
     }}>
-      <div style={{ color: '#A1A1AA', fontSize: 11, marginBottom: 4 }}>{tradeLabel}</div>
+      <div style={{ color: 'var(--muted-text)', fontSize: 11, marginBottom: 4 }}>{tradeLabel}</div>
       <div style={{ color: '#22C55E', fontWeight: 900, fontSize: 20 }}>{formatCurrency(payload[0].value)}</div>
     </div>
   );

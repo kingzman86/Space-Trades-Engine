@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lock, Sun, Moon, RefreshCw } from 'lucide-react';
+import { Lock, Sun, Moon, RefreshCw, Terminal } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { formatCurrency } from '../utils/formatters';
 import clsx from 'clsx';
@@ -55,17 +55,25 @@ export default function Navbar({ onLock, onReset, calcStats }) {
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold uppercase tracking-wider text-muted hover:text-gold-primary hover:bg-space-navy transition-all"
           >
             <AnimatePresence mode="wait" initial={false}>
-              {theme === 'dark' ? (
-                <motion.span key="sun" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+              {theme === 'dark' && (
+                <motion.span key="matrix-btn" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                  <Terminal size={14} />
+                </motion.span>
+              )}
+              {theme === 'matrix' && (
+                <motion.span key="sun-btn" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
                   <Sun size={14} />
                 </motion.span>
-              ) : (
-                <motion.span key="moon" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
+              )}
+              {theme === 'light' && (
+                <motion.span key="moon-btn" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
                   <Moon size={14} />
                 </motion.span>
               )}
             </AnimatePresence>
-            <span className="hidden sm:block">{theme === 'dark' ? 'Light' : 'Dark'}</span>
+            <span className="hidden sm:block">
+              {theme === 'dark' ? 'Matrix' : theme === 'matrix' ? 'Light' : 'Dark'}
+            </span>
           </motion.button>
 
           <button

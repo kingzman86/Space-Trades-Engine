@@ -8,7 +8,7 @@ export function useThemeState() {
     localStorage.setItem('st_theme', theme);
   }, [theme]);
 
-  const toggle = () => setTheme(t => t === 'dark' ? 'light' : 'dark');
+  const toggle = () => setTheme(t => t === 'dark' ? 'matrix' : t === 'matrix' ? 'light' : 'dark');
 
   return { theme, toggle };
 }

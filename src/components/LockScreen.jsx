@@ -123,7 +123,7 @@ export default function LockScreen({ onUnlock }) {
           <h1 className="font-display font-black text-gold-primary tracking-widest text-xl uppercase mb-1">
             Space Trades
           </h1>
-          <p className="font-body font-medium text-base mb-6" style={{ color: '#D4D4D8' }}>
+          <p className="font-body font-medium text-base mb-6" style={{ color: 'var(--star-white)' }}>
             Your Compounding Mission Control
           </p>
 
@@ -171,7 +171,7 @@ export default function LockScreen({ onUnlock }) {
           </button>
 
           <div className="mt-6 pt-5 border-t border-space-border">
-            <p className="text-sm font-body font-medium" style={{ color: '#A1A1AA' }}>
+            <p className="text-sm font-body font-medium" style={{ color: 'var(--muted-text)' }}>
               Already have a code? Enter it above.
             </p>
           </div>
@@ -204,11 +204,11 @@ export default function LockScreen({ onUnlock }) {
             </div>
             <div className="mb-3">
               <span className="font-display font-black text-3xl text-primary">$15</span>
-              <span className="font-body text-sm ml-1" style={{ color: '#A1A1AA' }}>/month</span>
+              <span className="font-body text-sm ml-1" style={{ color: 'var(--muted-text)' }}>/month</span>
             </div>
             <ul className="flex flex-col gap-1.5 mb-4">
               {['Full tool access', 'Cancel anytime', 'Access code emailed instantly'].map(f => (
-                <li key={f} className="flex items-center gap-2 text-sm font-body font-medium" style={{ color: '#D4D4D8' }}>
+                <li key={f} className="flex items-center gap-2 text-sm font-body font-medium" style={{ color: 'var(--star-white)' }}>
                   <span style={{ color: '#22C55E' }}>✓</span> {f}
                 </li>
               ))}
@@ -253,11 +253,11 @@ export default function LockScreen({ onUnlock }) {
             </div>
             <div className="mb-3">
               <span className="font-display font-black text-3xl text-primary">$197</span>
-              <span className="font-body text-sm ml-1" style={{ color: '#A1A1AA' }}>one-time</span>
+              <span className="font-body text-sm ml-1" style={{ color: 'var(--muted-text)' }}>one-time</span>
             </div>
             <ul className="flex flex-col gap-1.5 mb-4">
               {['Full tool access forever', 'All future updates', 'Access code emailed instantly'].map(f => (
-                <li key={f} className="flex items-center gap-2 text-sm font-body font-medium" style={{ color: '#D4D4D8' }}>
+                <li key={f} className="flex items-center gap-2 text-sm font-body font-medium" style={{ color: 'var(--star-white)' }}>
                   <span style={{ color: '#F5A623' }}>✓</span> {f}
                 </li>
               ))}

@@ -1,4 +1,5 @@
 export const ACCESS_CODES = [
+  "ST-OWNER-KINGZMAN",
   "ST-2025-ALPHA",
   "ST-2025-BETA",
   "ST-VIP-001",

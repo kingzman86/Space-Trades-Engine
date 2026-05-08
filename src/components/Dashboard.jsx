@@ -11,6 +11,8 @@ import FAQ from './FAQ';
 import TradeJournal from './TradeJournal';
 import Settings from './Settings';
 import StarField from './StarField';
+import MatrixField from './MatrixField';
+import { useTheme } from '../context/ThemeContext';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { calcTradeStats } from '../utils/math';
 import { formatCurrency, formatPercent } from '../utils/formatters';
@@ -33,6 +35,7 @@ export default function Dashboard({ onLock }) {
   const [activeTab, setActiveTab] = useState('calculator');
   const [calcStats, setCalcStats] = useState(null);
   const [trades] = useLocalStorage('st_trades', []);
+  const { theme } = useTheme();
 
   const stats = useMemo(() => calcTradeStats(trades || []), [trades]);
 
@@ -56,7 +59,7 @@ export default function Dashboard({ onLock }) {
       className="relative min-h-screen flex flex-col page-bg"
       style={{ backgroundColor: 'var(--space-black)' }}
     >
-      <StarField />
+      {theme === 'matrix' ? <MatrixField /> : <StarField />}
 
       <div className="relative z-10 flex flex-col flex-1">
         <Navbar onLock={handleLock} calcStats={activeTab === 'calculator' ? calcStats : null} />
@@ -87,7 +90,7 @@ export default function Dashboard({ onLock }) {
                     <span className="text-candle-green" style={{ textShadow: '0 0 32px rgba(34,197,94,0.5)' }}>Trade Smarter.</span>{' '}
                     <span className="text-gold-primary" style={{ textShadow: '0 0 32px rgba(245,166,35,0.45)' }}>Compound Faster.</span>
                   </h1>
-                  <p className="font-mono text-sm sm:text-base mt-2 tracking-widest" style={{ color: '#A1A1AA' }}>
+                  <p className="font-mono text-sm sm:text-base mt-2 tracking-widest" style={{ color: 'var(--muted-text)' }}>
                     Real Strategies · Real Results · Real Wealth
                   </p>
                 </div>
@@ -182,7 +185,7 @@ function HeroBadge({ icon, label }) {
   return (
     <div className="flex flex-col items-center gap-2">
       <span className="text-3xl" style={{ filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.3))' }}>{icon}</span>
-      <span className="font-display font-bold text-[11px] tracking-widest uppercase" style={{ color: '#A1A1AA' }}>{label}</span>
+      <span className="font-display font-bold text-[11px] tracking-widest uppercase" style={{ color: 'var(--muted-text)' }}>{label}</span>
     </div>
   );
 }

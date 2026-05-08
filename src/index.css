@@ -406,3 +406,25 @@ input[type="range"].gain-slider::-webkit-slider-thumb {
 [data-theme="light"] .page-bg {
   background: linear-gradient(160deg, #EEF1F7 0%, #E8ECF5 100%);
 }
+
+/* ─── MATRIX THEME ────────────────────────────── */
+[data-theme="matrix"] {
+  --space-black:  #000000;
+  --space-navy:   #020802;
+  --space-mid:    #050F05;
+  --space-border: #0A3D0A;
+  --star-white:   #00FF41;
+  --muted-text:   #00A020;
+  --candle-green: #00FF41;
+  --gold-primary: #00FF41;
+}
+
+[data-theme="matrix"] body { background-color: #000; color: #00FF41; }
+[data-theme="matrix"] .nav-bg { background: rgba(0,5,0,0.96) !important; border-bottom-color: #0A3D0A !important; }
+[data-theme="matrix"] .page-bg { background: #000 !important; }
+[data-theme="matrix"] .text-gold-primary { color: #00FF41 !important; }
+[data-theme="matrix"] .text-candle-green { color: #00FF41 !important; }
+[data-theme="matrix"] .panel { background: rgba(0,15,0,0.85) !important; border-color: #0A3D0A !important; }
+[data-theme="matrix"] .phase-card { background: rgba(0,10,0,0.9) !important; border-color: #0A3D0A !important; border-left-color: #00FF41 !important; }
+[data-theme="matrix"] .input-gold { background: #000 !important; border-color: #00FF41 !important; color: #00FF41 !important; }
+[data-theme="matrix"] canvas.star-field { display: none; }

@@ -198,7 +198,7 @@ export default function TradeJournal() {
 
         {/* Table */}
         {trades.length === 0 ? (
-          <div className="text-center py-12 font-body text-base font-medium" style={{ color: '#D4D4D8' }}>
+          <div className="text-center py-12 font-body text-base font-medium" style={{ color: 'var(--star-white)' }}>
             No trades logged yet. Add your first trade above.
           </div>
         ) : (
@@ -249,17 +249,17 @@ export default function TradeJournal() {
                       )}
                     >
                       <td className="py-3 px-2 text-primary num-mono font-bold">{t.pair}</td>
-                      <td className="py-3 px-2 num-mono font-medium" style={{ color: '#D4D4D8' }}>{formatCurrency(t.entryPrice)}</td>
-                      <td className="py-3 px-2 num-mono font-medium" style={{ color: '#D4D4D8' }}>{formatCurrency(t.exitPrice)}</td>
-                      <td className="py-3 px-2 num-mono font-medium" style={{ color: '#D4D4D8' }}>{formatCurrency(t.amount)}</td>
+                      <td className="py-3 px-2 num-mono font-medium" style={{ color: 'var(--star-white)' }}>{formatCurrency(t.entryPrice)}</td>
+                      <td className="py-3 px-2 num-mono font-medium" style={{ color: 'var(--star-white)' }}>{formatCurrency(t.exitPrice)}</td>
+                      <td className="py-3 px-2 num-mono font-medium" style={{ color: 'var(--star-white)' }}>{formatCurrency(t.amount)}</td>
                       <td className={clsx('py-3 px-2 num-mono font-medium', t.pnl >= 0 ? 'text-candle-green' : 'text-candle-red')}>
                         {t.pnl >= 0 ? '+' : ''}{formatCurrency(t.pnl)}
                       </td>
                       <td className={clsx('py-3 px-2 num font-medium text-sm', t.pnlPct >= 0 ? 'text-candle-green' : 'text-candle-red')}>
                         {t.pnlPct >= 0 ? '🟢' : '🔴'} {formatPercent(t.pnlPct)}
                       </td>
-                      <td className="py-3 px-2 num-mono font-medium" style={{ color: '#D4D4D8' }}>{t.date}</td>
-                      <td className="py-3 px-2 font-body font-medium truncate max-w-[120px]" style={{ color: '#D4D4D8' }}>{t.notes || '—'}</td>
+                      <td className="py-3 px-2 num-mono font-medium" style={{ color: 'var(--star-white)' }}>{t.date}</td>
+                      <td className="py-3 px-2 font-body font-medium truncate max-w-[120px]" style={{ color: 'var(--star-white)' }}>{t.notes || '—'}</td>
                       <td className="py-3 px-2">
                         <button
                           onClick={() => handleDelete(t.id)}

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export default function StarField() {
+export default function StarField({ forceShow = false }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ export default function StarField() {
     <canvas
       ref={canvasRef}
       className="star-field fixed inset-0 pointer-events-none z-0"
-      style={{ background: 'transparent' }}
+      style={{ background: 'transparent', ...(forceShow && { display: 'block' }) }}
     />
   );
 }

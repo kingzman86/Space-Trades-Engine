@@ -32,7 +32,7 @@ const CATEGORIES = [
     id: 'trade-setup',
     label: 'Trade Setup & Inputs',
     icon: Settings,
-    color: '#A1A1AA',
+    color: 'var(--muted-text)',
     questions: [
       { q: 'How does the asset (trading pair) field work?', a: 'The trading pair field (e.g. BTC/USDT) is a reference label for your own notes. It does not affect any calculations — it simply helps you identify which market each trade in the sequence is for.' },
       { q: 'What is leverage and how does it affect my results?', a: 'Leverage multiplies your position size. At 10x, a $1,000 allocation controls a $10,000 position. Both gains and losses are amplified by the leverage multiplier, and your liquidation price moves much closer to your entry.' },
@@ -162,7 +162,7 @@ export default function FAQ({ onGoToCalculator, onGoToHowItWorks }) {
         <h1 className="font-display font-black text-4xl text-primary mb-3">
           Frequently Asked Questions
         </h1>
-        <p className="font-body font-medium text-lg" style={{ color: '#D4D4D8' }}>
+        <p className="font-body font-medium text-lg" style={{ color: 'var(--star-white)' }}>
           Everything you need to understand and use the Space Trades Compounding Engine with confidence.
         </p>
       </div>
@@ -172,7 +172,7 @@ export default function FAQ({ onGoToCalculator, onGoToHowItWorks }) {
         className="flex items-center gap-3 px-5 py-4 rounded-xl border"
         style={{ background: '#1C1C24', borderColor: '#3F3F50' }}
       >
-        <Search size={18} style={{ color: '#A1A1AA', flexShrink: 0 }} />
+        <Search size={18} style={{ color: 'var(--muted-text)', flexShrink: 0 }} />
         <input
           type="text"
           value={search}
@@ -182,7 +182,7 @@ export default function FAQ({ onGoToCalculator, onGoToHowItWorks }) {
           style={{ color: 'var(--star-white)' }}
         />
         {search && (
-          <button onClick={() => setSearch('')} className="text-sm font-semibold transition-colors" style={{ color: '#A1A1AA' }}>
+          <button onClick={() => setSearch('')} className="text-sm font-semibold transition-colors" style={{ color: 'var(--muted-text)' }}>
             clear
           </button>
         )}
@@ -225,7 +225,7 @@ export default function FAQ({ onGoToCalculator, onGoToHowItWorks }) {
               ) : (
                 <span className="font-display font-black text-base" style={{ color: '#F4F4F5' }}>{cat.label}</span>
               )}
-              <div className="text-xs font-mono mt-0.5" style={{ color: '#A1A1AA' }}>
+              <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--muted-text)' }}>
                 {cat.questions.length} question{cat.questions.length !== 1 ? 's' : ''}
               </div>
             </div>
@@ -271,7 +271,7 @@ export default function FAQ({ onGoToCalculator, onGoToHowItWorks }) {
                           className="px-6 pb-6 pt-2 ml-6"
                           style={{ borderLeft: `3px solid ${cat.color}` }}
                         >
-                          <p className="font-body font-medium text-base leading-relaxed" style={{ color: '#D4D4D8' }}>
+                          <p className="font-body font-medium text-base leading-relaxed" style={{ color: 'var(--star-white)' }}>
                             {item.a}
                           </p>
                         </div>
@@ -288,7 +288,7 @@ export default function FAQ({ onGoToCalculator, onGoToHowItWorks }) {
       {/* No results */}
       {filtered.length === 0 && (
         <div className="panel flex flex-col items-center gap-3 py-16 text-center">
-          <HelpCircle size={36} style={{ color: '#A1A1AA', opacity: 0.5 }} />
+          <HelpCircle size={36} style={{ color: 'var(--muted-text)', opacity: 0.5 }} />
           <div className="font-display font-bold text-sm text-primary">No results for "{search}"</div>
           <div className="text-xs text-muted font-mono">Try a different keyword or browse the categories above</div>
         </div>
@@ -306,10 +306,10 @@ export default function FAQ({ onGoToCalculator, onGoToHowItWorks }) {
           <Lightbulb size={18} style={{ color: '#F5A623' }} />
         </div>
         <h2 className="font-display font-black text-lg text-primary mb-2">Still have questions?</h2>
-        <p className="font-body text-sm mb-1" style={{ color: '#A1A1AA' }}>
+        <p className="font-body text-sm mb-1" style={{ color: 'var(--muted-text)' }}>
           This tool is designed to be self-guided. Most answers are covered above.
         </p>
-        <p className="font-body text-sm mb-5" style={{ color: '#A1A1AA' }}>
+        <p className="font-body text-sm mb-5" style={{ color: 'var(--muted-text)' }}>
           Explore the <strong className="text-primary">How It Works</strong> tab for a full walkthrough, or use the{' '}
           <strong className="text-primary">Strategy Builder</strong> to see your plan in action.
         </p>

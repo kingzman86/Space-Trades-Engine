@@ -47,7 +47,7 @@ export default function Settings({ onReset }) {
               </span>
             ))}
           </div>
-          <p className="text-sm font-body font-medium mt-2" style={{ color: '#D4D4D8' }}>
+          <p className="text-sm font-body font-medium mt-2" style={{ color: 'var(--star-white)' }}>
             Edit <code className="text-gold-primary">src/config.js</code> to add or change access codes.
           </p>
         </section>
@@ -107,13 +107,15 @@ export default function Settings({ onReset }) {
                 style={{ filter: 'drop-shadow(0 0 8px rgba(245,200,66,0.3))' }} />
               <div>
                 <div className="font-display font-bold text-gold-primary text-sm tracking-wider">Space Trades</div>
-                <div className="font-body font-medium text-sm" style={{ color: '#D4D4D8' }}>Compounding Engine v1.0</div>
+                <div className="font-body font-medium text-sm" style={{ color: 'var(--star-white)' }}>Compounding Engine v1.0</div>
               </div>
             </div>
-            <p className="text-sm font-body font-medium leading-relaxed" style={{ color: '#D4D4D8' }}>
-              Educational tool for simulating compound growth on crypto trades.
+            <p className="text-sm font-body font-medium leading-relaxed" style={{ color: 'var(--star-white)' }}>
+              A compounding engine built for traders who want to plan every move before they make it.
+              Simulate trade sequences, visualize long-term growth, compare strategies, and track your real results — all in one place.
+            </p>
+            <p className="text-xs font-body mt-2 leading-relaxed" style={{ color: '#71717A' }}>
               Not financial advice. Trading crypto involves significant risk of loss.
-              Past simulation results do not guarantee future performance.
             </p>
           </div>
         </section>

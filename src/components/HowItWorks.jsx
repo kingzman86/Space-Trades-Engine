@@ -125,7 +125,7 @@ export default function HowItWorks({ onGoToCalculator }) {
         <h1 className="font-display font-black text-3xl text-primary tracking-tight mb-3">
           How It Works
         </h1>
-        <p className="font-body text-base leading-relaxed max-w-md mx-auto" style={{ color: '#D4D4D8' }}>
+        <p className="font-body text-base leading-relaxed max-w-md mx-auto" style={{ color: 'var(--star-white)' }}>
           Everything you need to know to start using the tool confidently — in under 60 seconds.
         </p>
       </motion.div>
@@ -149,10 +149,10 @@ export default function HowItWorks({ onGoToCalculator }) {
           <ArrowRight size={18} style={{ color: '#22C55E' }} />
         </div>
         <h2 className="font-display font-black text-xl text-primary mb-2">Now Try It</h2>
-        <p className="font-body text-base mb-1" style={{ color: '#D4D4D8' }}>
+        <p className="font-body text-base mb-1" style={{ color: 'var(--star-white)' }}>
           Go back to the calculator and run your first scenario.
         </p>
-        <p className="font-body text-base mb-4" style={{ color: '#D4D4D8' }}>
+        <p className="font-body text-base mb-4" style={{ color: 'var(--star-white)' }}>
           Change the numbers. Test different ideas.
         </p>
         <p className="text-sm font-mono italic mb-6" style={{ color: '#22C55E' }}>
