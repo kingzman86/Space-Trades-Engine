@@ -7,6 +7,7 @@ import {
 } from 'recharts';
 import { formatCurrency } from '../utils/formatters';
 import clsx from 'clsx';
+import toast from 'react-hot-toast';
 
 const HORIZON_MONTHS = { Daily: 1, Weekly: 3, '6M': 6, '12M': 12, '24M': 24 };
 const NUM_SIMS = 300;
@@ -132,9 +133,24 @@ export default function StrategyBuilder() {
     setFeePer(5); setHorizon('12M');
   };
 
-  const shareResults = () => {
+  const shareResults = async () => {
     const text = `Space Trades Strategy | Win Rate: ${winRate}% | Avg Win: +${avgWin}% | Avg Loss: -${avgLoss}% | Leverage: ${leverage}x | Projected ${horizon} ROI: ${sim.roi.toFixed(1)}%`;
-    navigator.clipboard?.writeText(text);
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        toast.success('Results copied to clipboard!');
+      } else {
+        const el = document.createElement('textarea');
+        el.value = text;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        toast.success('Results copied to clipboard!');
+      }
+    } catch {
+      toast.error('Could not copy — try manually selecting the text');
+    }
   };
 
   return (
