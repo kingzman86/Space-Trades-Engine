@@ -3,11 +3,20 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { Settings2, Trash2, Download, RefreshCw, Info } from 'lucide-react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { OWNER_CODE, CUSTOMER_CODES } from '../config';
 
 export default function Settings({ onReset }) {
   const [trades, , removeTrades] = useLocalStorage('st_trades', []);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [copiedCode, setCopiedCode] = useState('');
   const activeCode = localStorage.getItem('st_access') || '';
+  const isOwner = activeCode === OWNER_CODE;
+
+  const copyCode = (code) => {
+    navigator.clipboard?.writeText(code).catch(() => {});
+    setCopiedCode(code);
+    setTimeout(() => setCopiedCode(''), 2000);
+  };
 
   const exportAll = () => {
     const data = {
@@ -44,6 +53,39 @@ export default function Settings({ onReset }) {
             {activeCode}
           </span>
         </section>
+
+        {/* Owner-only: customer code manager */}
+        {isOwner && (
+          <section className="mb-6">
+            <h3 className="text-primary font-display text-xs font-semibold uppercase tracking-wider mb-1 flex items-center gap-2">
+              🔑 Customer Code Manager
+              <span className="text-[10px] font-mono text-candle-green border border-candle-green/30 px-1.5 py-0.5 rounded">OWNER ONLY</span>
+            </h3>
+            <p className="text-xs font-mono mb-3" style={{ color: 'var(--muted-text)' }}>
+              Copy a code and paste it into each customer's Fanbasis confirmation email. Give one code per customer.
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-64 overflow-y-auto pr-1">
+              {CUSTOMER_CODES.map((code, i) => (
+                <button
+                  key={code}
+                  onClick={() => copyCode(code)}
+                  className="flex items-center justify-between px-3 py-2 rounded-lg border text-left transition-all"
+                  style={{
+                    background: copiedCode === code ? 'rgba(34,197,94,0.12)' : 'var(--space-mid)',
+                    borderColor: copiedCode === code ? 'rgba(34,197,94,0.5)' : 'var(--space-border)',
+                  }}
+                >
+                  <span className="font-mono text-[10px] tracking-wider" style={{ color: 'var(--star-white)' }}>
+                    {code}
+                  </span>
+                  <span className="text-[9px] font-mono ml-2 flex-shrink-0" style={{ color: copiedCode === code ? '#22C55E' : 'var(--muted-text)' }}>
+                    {copiedCode === code ? '✓ Copied' : 'Copy'}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Data management */}
         <section className="mb-6">
