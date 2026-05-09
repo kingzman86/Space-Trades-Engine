@@ -73,53 +73,75 @@ export default function Dashboard({ onLock }) {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               className="relative z-10 border-b border-space-border overflow-hidden"
-              style={{ background: '#08080F' }}
+              style={{ background: '#05050A', minHeight: '460px' }}
             >
-              {/* Ambient glow blobs */}
-              <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', top: '-80px', left: '0%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(34,197,94,0.13) 0%, transparent 65%)' }} />
-                <div style={{ position: 'absolute', top: '-60px', right: '5%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(245,166,35,0.09) 0%, transparent 65%)' }} />
-                <div style={{ position: 'absolute', bottom: 0, left: '35%', width: '600px', height: '150px', background: 'radial-gradient(ellipse, rgba(34,197,94,0.05) 0%, transparent 70%)' }} />
+              {/* === BACKGROUND LAYERS === */}
+              {/* Deep green ground glow */}
+              <div style={{ position: 'absolute', bottom: -80, left: '20%', width: '800px', height: '500px', background: 'radial-gradient(ellipse, rgba(34,197,94,0.18) 0%, transparent 60%)', pointerEvents: 'none' }} />
+              {/* Gold right glow */}
+              <div style={{ position: 'absolute', top: -60, right: '0%', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(245,166,35,0.1) 0%, transparent 55%)', pointerEvents: 'none' }} />
+              {/* Faint top-left green */}
+              <div style={{ position: 'absolute', top: 0, left: 0, width: '450px', height: '350px', background: 'radial-gradient(circle at 10% 10%, rgba(34,197,94,0.09) 0%, transparent 60%)', pointerEvents: 'none' }} />
+              {/* Center energy glow behind logo */}
+              <div style={{ position: 'absolute', top: '50%', left: '52%', transform: 'translate(-50%,-50%)', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(34,197,94,0.12) 0%, rgba(245,166,35,0.06) 40%, transparent 70%)', pointerEvents: 'none' }} />
+
+              {/* Large ghost logo — center background element */}
+              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-20%, -50%)', zIndex: 1, pointerEvents: 'none' }}>
+                <img src="/Space_Trade_Logo.png" style={{ height: '480px', width: 'auto', opacity: 0.07, filter: 'drop-shadow(0 0 100px rgba(245,200,66,1))' }} alt="" />
               </div>
 
-              <div className="relative max-w-7xl mx-auto px-6 sm:px-10 py-10 flex items-center gap-10">
-                {/* Text block */}
-                <div className="flex-1 min-w-0">
-                  <h1 className="font-display font-black leading-none tracking-tight uppercase" style={{ fontSize: 'clamp(2rem, 4.5vw, 3.75rem)' }}>
-                    <span className="block" style={{ color: 'var(--star-white)', textShadow: '0 0 40px rgba(255,255,255,0.12)' }}>TRADE SMARTER.</span>
-                    <span className="block" style={{ color: '#F5A623', textShadow: '0 0 40px rgba(245,166,35,0.45)' }}>COMPOUND FASTER.</span>
+              {/* === MAIN CONTENT === */}
+              <div style={{ position: 'relative', zIndex: 2, maxWidth: '1280px', margin: '0 auto', padding: '44px 40px', display: 'flex', alignItems: 'center', gap: '16px', minHeight: '460px' }}>
+
+                {/* LEFT: Text */}
+                <div style={{ flex: 1, minWidth: 0 }}>
+
+                  {/* Main headline */}
+                  <h1 style={{ margin: 0, lineHeight: 0.92, textTransform: 'uppercase', fontFamily: "'DM Sans',sans-serif", fontWeight: 900 }}>
+                    <span style={{ display: 'block', fontSize: 'clamp(2.4rem, 4.8vw, 4.2rem)', color: '#FFFFFF', textShadow: '0 0 60px rgba(255,255,255,0.15)' }}>TRADE SMARTER.</span>
+                    <span style={{ display: 'block', fontSize: 'clamp(2.4rem, 4.8vw, 4.2rem)', color: '#F5A623', textShadow: '0 0 60px rgba(245,166,35,0.55), 0 0 120px rgba(245,166,35,0.25)' }}>COMPOUND FASTER.</span>
                   </h1>
 
-                  {/* Gold tagline banner */}
-                  <div
-                    className="inline-flex items-center px-4 py-2 mt-4 rounded"
-                    style={{ background: 'linear-gradient(90deg, #F5A623 0%, #E8961A 100%)', boxShadow: '0 0 24px rgba(245,166,35,0.35)' }}
-                  >
-                    <span className="font-display font-black text-xs sm:text-sm tracking-widest uppercase" style={{ color: '#000' }}>
+                  {/* Gold banner */}
+                  <div style={{ display: 'inline-block', marginTop: 14, padding: '7px 18px', background: 'linear-gradient(90deg, #F5A623 0%, #D4860A 100%)', boxShadow: '0 0 28px rgba(245,166,35,0.45)' }}>
+                    <span style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 900, fontSize: 'clamp(0.65rem, 1.3vw, 0.9rem)', textTransform: 'uppercase', letterSpacing: '2.5px', color: '#000' }}>
                       REAL STRATEGIES. REAL RESULTS. REAL WEALTH.
                     </span>
                   </div>
 
-                  {/* Feature icons grid */}
-                  <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 mt-6">
-                    {HERO_FEATURES.map(f => <HeroFeature key={f.label} {...f} />)}
+                  {/* Brand + tagline row */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 14, flexWrap: 'wrap' }}>
+                    <div>
+                      <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 900, fontSize: 'clamp(1rem, 2vw, 1.35rem)', color: '#22C55E', textTransform: 'uppercase', lineHeight: 1, textShadow: '0 0 28px rgba(34,197,94,0.55)' }}>SPACE TRADES</div>
+                      <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 900, fontSize: 'clamp(0.6rem, 1.1vw, 0.78rem)', color: '#22C55E', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: 2, textShadow: '0 0 18px rgba(34,197,94,0.4)' }}>CMF COMPOUNDING ENGINE</div>
+                    </div>
+                    <div style={{ width: 2, height: 36, background: 'rgba(255,255,255,0.12)', flexShrink: 0 }} />
+                    <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: 'clamp(0.6rem, 1vw, 0.78rem)', color: '#FFFFFF', textTransform: 'uppercase', letterSpacing: '1px', lineHeight: 1.4 }}>
+                      THE ADVANTAGE<br /><span style={{ color: '#22C55E' }}>SERIOUS TRADERS</span> USE.
+                    </div>
+                  </div>
+
+                  {/* Hexagon feature icons */}
+                  <div style={{ display: 'flex', gap: 10, marginTop: 22, flexWrap: 'wrap' }}>
+                    {HERO_FEATURES.map(f => <HexFeature key={f.label} {...f} />)}
                   </div>
                 </div>
 
+                {/* RIGHT: Laptop + Coins */}
                 <HeroLaptopPanel />
               </div>
 
               {/* Projected outcome strip */}
               {calcStats && (
-                <div className="relative border-t border-space-border" style={{ background: 'rgba(0,0,0,0.45)' }}>
-                  <div className="max-w-7xl mx-auto px-6 sm:px-10 py-2.5 flex items-center gap-3 flex-wrap">
-                    <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: 'var(--muted-text)' }}>◈ Projected Outcome</span>
-                    <div className="w-px h-4" style={{ background: 'var(--space-border)' }} />
-                    <OutcomeStat label="Start Capital"    value={formatCurrency(calcStats.starting)} />
-                    <span className="text-xs" style={{ color: 'var(--space-border)' }}>→</span>
-                    <OutcomeStat label="Projected Final"  value={formatCurrency(calcStats.final)} color="green" />
-                    <span className="text-xs" style={{ color: 'var(--space-border)' }}>→</span>
-                    <OutcomeStat label="Total ROI"        value={`${calcStats.returnPct >= 0 ? '+' : ''}${calcStats.returnPct.toFixed(2)}%`} color="gold" />
+                <div style={{ borderTop: '1px solid var(--space-border)', background: 'rgba(0,0,0,0.5)' }}>
+                  <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '10px 40px', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: 10, fontFamily: 'monospace', color: 'var(--muted-text)', textTransform: 'uppercase', letterSpacing: '3px' }}>◈ Projected Outcome</span>
+                    <div style={{ width: 1, height: 16, background: 'var(--space-border)' }} />
+                    <OutcomeStat label="Start Capital"   value={formatCurrency(calcStats.starting)} />
+                    <span style={{ color: 'var(--space-border)', fontSize: 12 }}>→</span>
+                    <OutcomeStat label="Projected Final" value={formatCurrency(calcStats.final)} color="green" />
+                    <span style={{ color: 'var(--space-border)', fontSize: 12 }}>→</span>
+                    <OutcomeStat label="Total ROI"       value={`${calcStats.returnPct >= 0 ? '+' : ''}${calcStats.returnPct.toFixed(2)}%`} color="gold" />
                   </div>
                 </div>
               )}
@@ -213,15 +235,20 @@ const HERO_FEATURES = [
   { icon: '🚀', label: 'CONSISTENCY TODAY',  sub: 'FREEDOM TOMORROW' },
 ];
 
-function HeroFeature({ icon, label, sub }) {
+function HexFeature({ icon, label, sub }) {
   return (
-    <div
-      className="flex flex-col items-center gap-1.5 px-2 py-3 rounded-xl"
-      style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
-    >
-      <span className="text-2xl" style={{ filter: 'drop-shadow(0 0 8px rgba(245,200,66,0.4))' }}>{icon}</span>
-      <span className="font-display font-black text-[9px] tracking-wider uppercase text-center leading-tight" style={{ color: 'var(--star-white)' }}>{label}</span>
-      <span className="font-mono text-[8px] tracking-wider uppercase text-center" style={{ color: '#22C55E' }}>{sub}</span>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5, minWidth: 74 }}>
+      <div style={{
+        width: 56, height: 56, flexShrink: 0,
+        background: 'rgba(34,197,94,0.08)',
+        border: '1px solid rgba(34,197,94,0.3)',
+        clipPath: 'polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: '1.4rem',
+        boxShadow: '0 0 18px rgba(34,197,94,0.15)',
+      }}>{icon}</div>
+      <span style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 900, fontSize: 7.5, color: '#FFFFFF', textTransform: 'uppercase', letterSpacing: '0.5px', textAlign: 'center', lineHeight: 1.2 }}>{label}</span>
+      <span style={{ fontFamily: 'monospace', fontSize: 7, color: '#22C55E', textTransform: 'uppercase', letterSpacing: '0.3px', textAlign: 'center' }}>{sub}</span>
     </div>
   );
 }
