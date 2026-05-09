@@ -73,33 +73,63 @@ export default function Dashboard({ onLock }) {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               className="relative z-10 border-b border-space-border overflow-hidden"
-              style={{
-                background: 'linear-gradient(135deg, rgba(34,197,94,0.12) 0%, rgba(12,12,15,0.95) 50%, rgba(245,166,35,0.08) 100%)',
-                boxShadow: '0 4px 32px rgba(34,197,94,0.08)',
-              }}
+              style={{ background: '#08080F' }}
             >
-              <div className="max-w-7xl mx-auto px-8 py-8 flex items-center gap-8">
-                <img
-                  src="/Space_Trade_Logo.png"
-                  alt="Space Trades"
-                  className="h-20 w-auto hidden sm:block flex-shrink-0"
-                  style={{ filter: 'drop-shadow(0 0 20px rgba(245,200,66,0.55))' }}
-                />
+              {/* Ambient glow blobs */}
+              <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: '-80px', left: '0%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(34,197,94,0.13) 0%, transparent 65%)' }} />
+                <div style={{ position: 'absolute', top: '-60px', right: '5%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(245,166,35,0.09) 0%, transparent 65%)' }} />
+                <div style={{ position: 'absolute', bottom: 0, left: '35%', width: '600px', height: '150px', background: 'radial-gradient(ellipse, rgba(34,197,94,0.05) 0%, transparent 70%)' }} />
+              </div>
+
+              <div className="relative max-w-7xl mx-auto px-6 sm:px-10 py-10 flex items-center gap-10">
+                {/* Text block */}
                 <div className="flex-1 min-w-0">
-                  <h1 className="font-display font-black text-2xl sm:text-4xl tracking-wider uppercase leading-tight">
-                    <span className="text-candle-green" style={{ textShadow: '0 0 32px rgba(34,197,94,0.5)' }}>Trade Smarter.</span>{' '}
-                    <span className="text-gold-primary" style={{ textShadow: '0 0 32px rgba(245,166,35,0.45)' }}>Compound Faster.</span>
+                  <h1 className="font-display font-black leading-none tracking-tight uppercase" style={{ fontSize: 'clamp(2rem, 4.5vw, 3.75rem)' }}>
+                    <span className="block" style={{ color: 'var(--star-white)', textShadow: '0 0 40px rgba(255,255,255,0.12)' }}>TRADE SMARTER.</span>
+                    <span className="block" style={{ color: '#F5A623', textShadow: '0 0 40px rgba(245,166,35,0.45)' }}>COMPOUND FASTER.</span>
                   </h1>
-                  <p className="font-mono text-sm sm:text-base mt-2 tracking-widest" style={{ color: 'var(--muted-text)' }}>
-                    Real Strategies · Real Results · Real Wealth
-                  </p>
+
+                  {/* Gold tagline banner */}
+                  <div
+                    className="inline-flex items-center px-4 py-2 mt-4 rounded"
+                    style={{ background: 'linear-gradient(90deg, #F5A623 0%, #E8961A 100%)', boxShadow: '0 0 24px rgba(245,166,35,0.35)' }}
+                  >
+                    <span className="font-display font-black text-xs sm:text-sm tracking-widest uppercase" style={{ color: '#000' }}>
+                      REAL STRATEGIES. REAL RESULTS. REAL WEALTH.
+                    </span>
+                  </div>
+
+                  {/* Feature icons grid */}
+                  <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 mt-6">
+                    {HERO_FEATURES.map(f => <HeroFeature key={f.label} {...f} />)}
+                  </div>
                 </div>
-                <div className="hidden lg:flex items-center gap-8">
-                  <HeroBadge label="Precise Entry"    icon="🎯" />
-                  <HeroBadge label="Compound Capital" icon="💰" />
-                  <HeroBadge label="Track Growth"     icon="📈" />
+
+                {/* Logo */}
+                <div className="hidden xl:flex flex-shrink-0 items-center justify-center" style={{ width: '210px' }}>
+                  <img
+                    src="/Space_Trade_Logo.png"
+                    alt="Space Trades"
+                    style={{ width: '200px', height: 'auto', filter: 'drop-shadow(0 0 40px rgba(245,200,66,0.65)) drop-shadow(0 0 80px rgba(34,197,94,0.25))' }}
+                  />
                 </div>
               </div>
+
+              {/* Projected outcome strip */}
+              {calcStats && (
+                <div className="relative border-t border-space-border" style={{ background: 'rgba(0,0,0,0.45)' }}>
+                  <div className="max-w-7xl mx-auto px-6 sm:px-10 py-2.5 flex items-center gap-3 flex-wrap">
+                    <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: 'var(--muted-text)' }}>◈ Projected Outcome</span>
+                    <div className="w-px h-4" style={{ background: 'var(--space-border)' }} />
+                    <OutcomeStat label="Start Capital"    value={formatCurrency(calcStats.starting)} />
+                    <span className="text-xs" style={{ color: 'var(--space-border)' }}>→</span>
+                    <OutcomeStat label="Projected Final"  value={formatCurrency(calcStats.final)} color="green" />
+                    <span className="text-xs" style={{ color: 'var(--space-border)' }}>→</span>
+                    <OutcomeStat label="Total ROI"        value={`${calcStats.returnPct >= 0 ? '+' : ''}${calcStats.returnPct.toFixed(2)}%`} color="gold" />
+                  </div>
+                </div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
@@ -181,11 +211,34 @@ export default function Dashboard({ onLock }) {
   );
 }
 
-function HeroBadge({ icon, label }) {
+const HERO_FEATURES = [
+  { icon: '🎯', label: 'PRECISE ENTRY',      sub: 'STRATEGIES'       },
+  { icon: '🛡️', label: 'CONTROL RISK',       sub: 'BEFORE ENTRY'     },
+  { icon: '💰', label: 'COMPOUND CAPITAL',   sub: 'MAXIMIZE GROWTH'  },
+  { icon: '📊', label: 'ALLOCATE SMARTER',   sub: 'GROW FASTER'      },
+  { icon: '📈', label: 'TRACK GROWTH',       sub: 'STAY SHARP'       },
+  { icon: '🚀', label: 'CONSISTENCY TODAY',  sub: 'FREEDOM TOMORROW' },
+];
+
+function HeroFeature({ icon, label, sub }) {
   return (
-    <div className="flex flex-col items-center gap-2">
-      <span className="text-3xl" style={{ filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.3))' }}>{icon}</span>
-      <span className="font-display font-bold text-[11px] tracking-widest uppercase" style={{ color: 'var(--muted-text)' }}>{label}</span>
+    <div
+      className="flex flex-col items-center gap-1.5 px-2 py-3 rounded-xl"
+      style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+    >
+      <span className="text-2xl" style={{ filter: 'drop-shadow(0 0 8px rgba(245,200,66,0.4))' }}>{icon}</span>
+      <span className="font-display font-black text-[9px] tracking-wider uppercase text-center leading-tight" style={{ color: 'var(--star-white)' }}>{label}</span>
+      <span className="font-mono text-[8px] tracking-wider uppercase text-center" style={{ color: '#22C55E' }}>{sub}</span>
+    </div>
+  );
+}
+
+function OutcomeStat({ label, value, color }) {
+  const col = color === 'green' ? '#22C55E' : color === 'gold' ? '#F5A623' : 'var(--star-white)';
+  return (
+    <div className="flex items-center gap-1.5">
+      <span className="text-[10px] font-mono uppercase tracking-wider" style={{ color: 'var(--muted-text)' }}>{label}</span>
+      <span className="num-mono text-sm font-black" style={{ color: col }}>{value}</span>
     </div>
   );
 }

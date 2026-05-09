@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lock, Sun, Moon, RefreshCw, Terminal } from 'lucide-react';
+import { Lock, Sun, Moon, RefreshCw, Terminal, ChevronRight, TrendingUp, DollarSign, Zap } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { formatCurrency } from '../utils/formatters';
 import clsx from 'clsx';
@@ -15,24 +15,26 @@ export default function Navbar({ onLock, onReset, calcStats }) {
 
         {/* Logo */}
         <div className="flex items-center gap-2 flex-shrink-0">
-          <img src="/Space_Trade_Logo.png" alt="Space Trades" className="h-6 w-auto"
+          <img src="/Space_Trade_Logo.png" alt="Space Trades" className="h-7 w-auto"
             style={{ filter: 'drop-shadow(0 0 6px rgba(245,200,66,0.4))' }} />
-          <span className="font-display font-bold text-gold-primary text-xs tracking-widest hidden sm:block uppercase">
-            Space Trades
-          </span>
+          <div className="hidden sm:flex flex-col leading-tight">
+            <span className="font-display font-black text-gold-primary text-xs tracking-widest uppercase">Space Trades</span>
+            <span className="font-mono text-[9px] tracking-widest uppercase" style={{ color: 'var(--muted-text)' }}>CMF Compounding Engine</span>
+          </div>
         </div>
 
         {/* Live Stats — center */}
         {calcStats && (
-          <div className="hidden md:flex items-center gap-1 flex-1 justify-center">
-            <StatPill label="Start" value={formatCurrency(starting)} color="muted" />
-            <span className="text-space-border text-xs">|</span>
-            <StatPill label="Final" value={formatCurrency(finalVal)} color="green" />
-            <span className="text-space-border text-xs">|</span>
+          <div className="hidden md:flex items-center gap-1.5 flex-1 justify-center">
+            <StatPill label="Start" value={formatCurrency(starting)} color="muted" icon={<DollarSign size={10} />} />
+            <ChevronRight size={13} style={{ color: 'var(--space-border)', flexShrink: 0 }} />
+            <StatPill label="Final" value={formatCurrency(finalVal)} color="green" icon={<TrendingUp size={10} />} />
+            <ChevronRight size={13} style={{ color: 'var(--space-border)', flexShrink: 0 }} />
             <StatPill
-              label="Return"
+              label="ROI"
               value={`${returnPct >= 0 ? '+' : ''}${returnPct.toFixed(2)}%`}
-              color={returnPct >= 0 ? 'green' : 'red'}
+              color={returnPct >= 0 ? 'gold' : 'red'}
+              icon={<Zap size={10} />}
             />
           </div>
         )}
@@ -89,12 +91,21 @@ export default function Navbar({ onLock, onReset, calcStats }) {
   );
 }
 
-function StatPill({ label, value, color }) {
-  const col = color === 'green' ? '#22C55E' : color === 'red' ? '#EF4444' : 'var(--muted-text)';
+function StatPill({ label, value, color, icon }) {
+  const isGold  = color === 'gold';
+  const isGreen = color === 'green';
+  const isRed   = color === 'red';
+  const textCol = isGold ? '#F5A623' : isGreen ? '#22C55E' : isRed ? '#EF4444' : 'var(--star-white)';
+  const bg      = isGold ? 'rgba(245,166,35,0.12)' : isGreen ? 'rgba(34,197,94,0.1)' : 'var(--space-mid)';
+  const border  = isGold ? 'rgba(245,166,35,0.35)' : isGreen ? 'rgba(34,197,94,0.25)' : 'var(--space-border)';
   return (
-    <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg" style={{ background: 'var(--space-mid)' }}>
-      <span className="text-[10px] font-mono text-muted uppercase tracking-wider">{label}:</span>
-      <span className="num-mono text-sm font-black" style={{ color, letterSpacing: '0.02em' }}>{value}</span>
+    <div
+      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg"
+      style={{ background: bg, border: `1px solid ${border}` }}
+    >
+      <span style={{ color: textCol }}>{icon}</span>
+      <span className="text-[10px] font-mono uppercase tracking-wider" style={{ color: 'var(--muted-text)' }}>{label}</span>
+      <span className="num-mono text-sm font-black" style={{ color: textCol, letterSpacing: '0.02em' }}>{value}</span>
     </div>
   );
 }
