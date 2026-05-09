@@ -509,6 +509,63 @@ export default function CompoundCalculator({ onStatsChange }) {
 
         </div>
       </motion.div>
+
+      {/* CMF Framework Banner */}
+      <div
+        className="rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+        style={{
+          background: 'linear-gradient(135deg, #0C0C0F 0%, #111118 100%)',
+          border: '1px solid rgba(245,166,35,0.3)',
+          boxShadow: '0 0 32px rgba(245,166,35,0.08)',
+        }}
+      >
+        <div className="flex-1 min-w-0">
+          <div className="font-display font-black text-lg tracking-wide" style={{ color: '#F5A623' }}>
+            Want to identify better trades?
+          </div>
+          <div className="text-sm font-mono mt-1" style={{ color: 'var(--muted-text)' }}>
+            Learn the CMF Framework — the system behind this compounding engine.
+          </div>
+        </div>
+        <a
+          href="https://www.spacetrades.net"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-shrink-0 flex items-center gap-2 px-6 py-3 rounded-xl font-display font-black text-sm uppercase tracking-wider transition-all hover:opacity-90 active:scale-95"
+          style={{ background: '#F5A623', color: '#000' }}
+        >
+          Learn the CMF Framework →
+        </a>
+      </div>
+
+      {/* Blofin Banner */}
+      <div
+        className="rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+        style={{
+          background: 'linear-gradient(135deg, #041A0A 0%, #061410 100%)',
+          border: '1px solid rgba(34,197,94,0.3)',
+          boxShadow: '0 0 32px rgba(34,197,94,0.08)',
+        }}
+      >
+        <div className="flex-1 min-w-0">
+          <div className="font-display font-black text-lg tracking-wide" style={{ color: '#22C55E' }}>
+            Ready to execute this trade?
+          </div>
+          <div className="text-sm font-mono mt-1" style={{ color: 'var(--muted-text)' }}>
+            Your plan is built — now put it into action.
+          </div>
+        </div>
+        <a
+          href="https://blofin.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-shrink-0 flex items-center gap-2 px-6 py-3 rounded-xl font-display font-black text-sm uppercase tracking-wider transition-all hover:opacity-90 active:scale-95"
+          style={{ background: '#22C55E', color: '#000' }}
+        >
+          Trade on Blofin →
+        </a>
+      </div>
+
     </div>
   );
 }
