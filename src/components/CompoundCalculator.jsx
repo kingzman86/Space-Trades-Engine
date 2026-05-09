@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus, RefreshCw, TrendingUp, Zap, BarChart2, DollarSign, Save, Share2, Download, FileText, FileSpreadsheet, Trash2, Info } from 'lucide-react';
 import {
@@ -9,7 +9,6 @@ import clsx from 'clsx';
 import CountUp from 'react-countup';
 import PhaseCard from './PhaseCard';
 import GrowthChart from './GrowthChart';
-import CasinoJackpot from './CasinoJackpot';
 import { formatCurrency, formatPercent, formatCompact } from '../utils/formatters';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import toast from 'react-hot-toast';
@@ -81,20 +80,6 @@ export default function CompoundCalculator({ onStatsChange }) {
     onStatsChange?.({ starting: capital, final: finalValue, returnPct: totalROI });
   }, [capital, finalValue, totalROI]);
 
-  /* Casino jackpot — shows when ROI climbs to a new high (debounced) */
-  const [jackpot,      setJackpot]     = useState(null);
-  const lastFiredROI  = useRef(-Infinity);
-  const jackpotTimer  = useRef(null);
-  useEffect(() => {
-    if (totalROI <= 5) return;
-    if (totalROI < lastFiredROI.current + 15) return;
-    clearTimeout(jackpotTimer.current);
-    jackpotTimer.current = setTimeout(() => {
-      lastFiredROI.current = totalROI;
-      setJackpot({ finalValue, roi: totalROI });
-    }, 1200);
-    return () => clearTimeout(jackpotTimer.current);
-  }, [totalROI, finalValue]);
 
   /* Chart-compatible data */
   const chartData = [
@@ -203,18 +188,6 @@ export default function CompoundCalculator({ onStatsChange }) {
 
   return (
     <div className="flex flex-col gap-5">
-
-      {/* Casino Jackpot overlay */}
-      <AnimatePresence>
-        {jackpot && (
-          <CasinoJackpot
-            key="jackpot"
-            finalValue={jackpot.finalValue}
-            roi={jackpot.roi}
-            onClose={() => setJackpot(null)}
-          />
-        )}
-      </AnimatePresence>
 
       {/* Live Stats Bar */}
       <motion.div
