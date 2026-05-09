@@ -1,4 +1,5 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
+import confetti from 'canvas-confetti';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus, RefreshCw, TrendingUp, Zap, BarChart2, DollarSign, Save, Share2, Download, FileText, FileSpreadsheet, Trash2, Info } from 'lucide-react';
 import {
@@ -79,6 +80,30 @@ export default function CompoundCalculator({ onStatsChange }) {
   useEffect(() => {
     onStatsChange?.({ starting: capital, final: finalValue, returnPct: totalROI });
   }, [capital, finalValue, totalROI]);
+
+  /* Jackpot confetti — fires when ROI climbs to a new high (debounced) */
+  const lastFiredROI  = useRef(-Infinity);
+  const confettiTimer = useRef(null);
+  useEffect(() => {
+    if (totalROI <= 5) return;
+    if (totalROI < lastFiredROI.current + 15) return;
+    clearTimeout(confettiTimer.current);
+    confettiTimer.current = setTimeout(() => {
+      lastFiredROI.current = totalROI;
+      const GOLD  = ['#F5A623', '#FFE57A', '#F5C842', '#D4950A'];
+      const GREEN = ['#22C55E', '#16A34A', '#86EFAC'];
+      const ALL   = [...GOLD, ...GREEN, '#FFFFFF'];
+      confetti({ particleCount: 120, spread: 80, origin: { x: 0.5, y: 0.45 }, colors: ALL, scalar: 1.3, gravity: 0.9 });
+      setTimeout(() => {
+        confetti({ particleCount: 70, angle: 60,  spread: 60, origin: { x: 0, y: 0.65 }, colors: GOLD });
+        confetti({ particleCount: 70, angle: 120, spread: 60, origin: { x: 1, y: 0.65 }, colors: GOLD });
+      }, 280);
+      setTimeout(() => {
+        confetti({ particleCount: 50, spread: 100, origin: { x: 0.5, y: 0.3 }, colors: GREEN, scalar: 0.9 });
+      }, 550);
+    }, 1200);
+    return () => clearTimeout(confettiTimer.current);
+  }, [totalROI]);
 
   /* Chart-compatible data */
   const chartData = [

@@ -106,14 +106,7 @@ export default function Dashboard({ onLock }) {
                   </div>
                 </div>
 
-                {/* Logo */}
-                <div className="hidden xl:flex flex-shrink-0 items-center justify-center" style={{ width: '210px' }}>
-                  <img
-                    src="/Space_Trade_Logo.png"
-                    alt="Space Trades"
-                    style={{ width: '200px', height: 'auto', filter: 'drop-shadow(0 0 40px rgba(245,200,66,0.65)) drop-shadow(0 0 80px rgba(34,197,94,0.25))' }}
-                  />
-                </div>
+                <HeroLaptopPanel />
               </div>
 
               {/* Projected outcome strip */}
@@ -239,6 +232,158 @@ function OutcomeStat({ label, value, color }) {
     <div className="flex items-center gap-1.5">
       <span className="text-[10px] font-mono uppercase tracking-wider" style={{ color: 'var(--muted-text)' }}>{label}</span>
       <span className="num-mono text-sm font-black" style={{ color: col }}>{value}</span>
+    </div>
+  );
+}
+
+function GoldCoin({ size }) {
+  return (
+    <div style={{
+      width: size, height: size, borderRadius: '50%',
+      background: 'radial-gradient(circle at 35% 30%, #FFE57A 0%, #F5C842 35%, #D4950A 70%, #8B6214 100%)',
+      boxShadow: `0 0 ${size * 0.28}px rgba(245,180,35,0.75), 0 ${size * 0.08}px ${size * 0.18}px rgba(0,0,0,0.7), inset 0 ${size * 0.07}px ${size * 0.08}px rgba(255,240,160,0.5)`,
+      border: `${Math.max(2, Math.round(size * 0.04))}px solid rgba(255,205,50,0.55)`,
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      fontSize: size * 0.42, fontWeight: 900, color: '#7A4800',
+      userSelect: 'none', flexShrink: 0,
+    }}>₿</div>
+  );
+}
+
+const LAPTOP_TRADES = [
+  ['1', 'LONG', '3X',  '$61,250', '$63,100', 'WIN'],
+  ['2', 'LONG', '5X',  '$63,350', '$65,400', 'WIN'],
+  ['3', 'LONG', '8X',  '$63,500', '$66,250', 'WIN'],
+  ['4', 'LONG', '10X', '$66,300', '$72,000', 'OPEN'],
+];
+
+function HeroLaptopPanel() {
+  const coins = [
+    { size: 74, pos: { bottom: '-8px', right: '-4px'  }, delay: 0   },
+    { size: 58, pos: { bottom: '-12px', right: '62px'  }, delay: 0.4 },
+    { size: 44, pos: { bottom: '-6px', right: '116px' }, delay: 0.8 },
+    { size: 50, pos: { top: '8px',    right: '-8px'  }, delay: 0.3 },
+    { size: 34, pos: { top: '68px',   left: '4px'   }, delay: 0.6 },
+  ];
+
+  return (
+    <div className="hidden xl:flex flex-shrink-0 items-center justify-center relative" style={{ width: '420px', height: '310px' }}>
+
+      {/* Floating gold coins */}
+      {coins.map((c, i) => (
+        <motion.div key={i} style={{ position: 'absolute', ...c.pos }}
+          animate={{ y: [0, -9, 0] }}
+          transition={{ duration: 3 + i * 0.25, repeat: Infinity, ease: 'easeInOut', delay: c.delay }}
+        >
+          <GoldCoin size={c.size} />
+        </motion.div>
+      ))}
+
+      {/* Laptop shell */}
+      <div style={{ position: 'relative', width: '340px' }}>
+
+        {/* Screen bezel */}
+        <div style={{
+          background: '#08080F',
+          border: '2px solid rgba(34,197,94,0.4)',
+          borderBottom: 'none',
+          borderRadius: '10px 10px 0 0',
+          overflow: 'hidden',
+          boxShadow: '0 0 50px rgba(34,197,94,0.18), 0 0 30px rgba(245,166,35,0.1)',
+        }}>
+          {/* macOS-style title bar */}
+          <div style={{ background: '#111118', padding: '5px 8px', display: 'flex', alignItems: 'center', gap: '4px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            {['#FF5F57','#FFBD2E','#28CA41'].map((bg, i) => (
+              <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: bg }} />
+            ))}
+            <div style={{ flex: 1, marginLeft: 8, height: 10, background: 'rgba(255,255,255,0.05)', borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <span style={{ fontSize: 5, fontFamily: 'monospace', color: '#555' }}>space-trades.app</span>
+            </div>
+          </div>
+
+          {/* App UI content */}
+          <div style={{ padding: '8px 10px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+
+            {/* Brand header */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, paddingBottom: 6, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+              <img src="/Space_Trade_Logo.png" style={{ height: 20, width: 'auto', filter: 'drop-shadow(0 0 5px rgba(245,200,66,0.65))' }} alt="" />
+              <div>
+                <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 900, fontSize: 7.5, color: '#F5A623', textTransform: 'uppercase', letterSpacing: 1 }}>Space Trades</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 5, color: '#3a3a4a', textTransform: 'uppercase', letterSpacing: 0.8 }}>CMF Compounding Engine</div>
+              </div>
+              <div style={{ marginLeft: 'auto', background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.35)', borderRadius: 3, padding: '1px 5px' }}>
+                <span style={{ fontSize: 5, fontFamily: 'monospace', color: '#22C55E', fontWeight: 700 }}>● LIVE</span>
+              </div>
+            </div>
+
+            {/* 3-col stat boxes */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 4 }}>
+              {[
+                { label: 'Total Return', value: '+178.91%', color: '#22C55E' },
+                { label: 'Risk/Trade',   value: '1.75%',    color: '#F5A623' },
+                { label: 'Portfolio',    value: '$34,782',   color: '#22C55E' },
+              ].map(s => (
+                <div key={s.label} style={{ background: `${s.color}10`, border: `1px solid ${s.color}28`, borderRadius: 4, padding: '4px 5px' }}>
+                  <div style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#555', textTransform: 'uppercase', marginBottom: 2 }}>{s.label}</div>
+                  <div style={{ fontSize: 8, fontFamily: 'monospace', fontWeight: 700, color: s.color }}>{s.value}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Extra stat row */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 4 }}>
+              {[
+                { label: 'Real Profit',   value: '$24,782.35', color: '#22C55E' },
+                { label: 'Risk : Reward', value: '1 : 3.27',   color: '#F5A623' },
+              ].map(s => (
+                <div key={s.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: 5, fontFamily: 'monospace', color: '#555', textTransform: 'uppercase' }}>{s.label}</span>
+                  <span style={{ fontSize: 7, fontFamily: 'monospace', fontWeight: 700, color: s.color }}>{s.value}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Trade breakdown */}
+            <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: 5 }}>
+              <div style={{ fontSize: 5, fontFamily: 'monospace', color: '#444', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 }}>Trade Breakdown</div>
+              <div style={{ display: 'grid', gridTemplateColumns: '0.5fr 1fr 0.8fr 1fr 1fr 1fr', gap: 2, marginBottom: 3 }}>
+                {['#','DIR','LEV','ENTRY','TARGET','STATUS'].map(h => (
+                  <div key={h} style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#3a3a4a', textAlign: 'center' }}>{h}</div>
+                ))}
+              </div>
+              {LAPTOP_TRADES.map(([n, dir, lev, entry, target, status]) => (
+                <div key={n} style={{ display: 'grid', gridTemplateColumns: '0.5fr 1fr 0.8fr 1fr 1fr 1fr', gap: 2, marginBottom: 2 }}>
+                  <div style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#555', textAlign: 'center' }}>{n}</div>
+                  <div style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#22C55E', textAlign: 'center' }}>{dir}</div>
+                  <div style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#777', textAlign: 'center' }}>{lev}</div>
+                  <div style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#777', textAlign: 'center' }}>{entry}</div>
+                  <div style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#777', textAlign: 'center' }}>{target}</div>
+                  <div style={{ fontSize: 4.5, fontFamily: 'monospace', fontWeight: 700, color: status === 'WIN' ? '#22C55E' : '#F5A623', textAlign: 'center' }}>{status}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Keyboard base */}
+        <div style={{
+          background: 'linear-gradient(180deg, #1a1a26 0%, #0f0f1a 100%)',
+          height: 16, borderRadius: '0 0 8px 8px',
+          border: '2px solid rgba(34,197,94,0.25)', borderTop: 'none',
+          position: 'relative',
+        }}>
+          <div style={{
+            position: 'absolute', bottom: 3, left: '50%', transform: 'translateX(-50%)',
+            width: 80, height: 7, background: 'rgba(255,255,255,0.05)',
+            borderRadius: 3, border: '1px solid rgba(255,255,255,0.08)',
+          }} />
+        </div>
+
+        {/* Stand notch */}
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <div style={{ width: 60, height: 6, background: 'linear-gradient(180deg,#1a1a26,#0f0f1a)', borderRadius: '0 0 6px 6px', border: '2px solid rgba(34,197,94,0.15)', borderTop: 'none' }} />
+        </div>
+      </div>
     </div>
   );
 }
