@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { Settings2, Trash2, Download, RefreshCw, Info } from 'lucide-react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { ACCESS_CODES } from '../config';
 
 export default function Settings({ onReset }) {
   const [trades, , removeTrades] = useLocalStorage('st_trades', []);
   const [showConfirm, setShowConfirm] = useState(false);
+  const activeCode = localStorage.getItem('st_access') || '';
 
   const exportAll = () => {
     const data = {
@@ -35,21 +35,14 @@ export default function Settings({ onReset }) {
           <Settings2 size={13} /> Settings & Data
         </h2>
 
-        {/* Access codes */}
+        {/* Access code */}
         <section className="mb-6">
           <h3 className="text-primary font-display text-xs font-semibold uppercase tracking-wider mb-3">
-            Active Access Codes
+            Active Access Code
           </h3>
-          <div className="flex flex-wrap gap-2">
-            {ACCESS_CODES.map(code => (
-              <span key={code} className="px-3 py-1.5 rounded-lg bg-space-mid border border-space-border font-mono text-xs text-gold-primary tracking-wider">
-                {code}
-              </span>
-            ))}
-          </div>
-          <p className="text-sm font-body font-medium mt-2" style={{ color: 'var(--star-white)' }}>
-            Edit <code className="text-gold-primary">src/config.js</code> to add or change access codes.
-          </p>
+          <span className="px-3 py-1.5 rounded-lg bg-space-mid border border-space-border font-mono text-xs text-gold-primary tracking-wider">
+            {activeCode}
+          </span>
         </section>
 
         {/* Data management */}
