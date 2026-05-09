@@ -278,23 +278,30 @@ function GoldCoin({ size }) {
 }
 
 const LAPTOP_TRADES = [
-  ['1', 'LONG', '3X',  '$61,250', '$63,100', 'WIN'],
-  ['2', 'LONG', '5X',  '$63,350', '$65,400', 'WIN'],
-  ['3', 'LONG', '8X',  '$63,500', '$66,250', 'WIN'],
-  ['4', 'LONG', '10X', '$66,300', '$72,000', 'OPEN'],
+  ['1','LONG','3X', '$61,250','$63,100','$60,800','1.55%','2.82%','WIN' ],
+  ['2','LONG','5X', '$63,350','$65,400','$62,700','1.75%','3.58%','WIN' ],
+  ['3','LONG','5X', '$63,500','$66,250','$64,900','1.50%','4.20%','WIN' ],
+  ['4','LONG','10X','$66,300','$72,000','$67,400','1.75%','4.87%','OPEN'],
+];
+
+const KB_ROWS = [
+  [1.4,1,1,1,1,1,1,1,1,1,1,1,1,1.6],
+  [1.7,1,1,1,1,1,1,1,1,1,1,1,1,1.3],
+  [1.9,1,1,1,1,1,1,1,1,1,1,1,2.1],
+  [2.4,1,1,1,1,1,1,1,1,1,2.6],
 ];
 
 function HeroLaptopPanel() {
   const coins = [
-    { size: 74, pos: { bottom: '-8px', right: '-4px'  }, delay: 0   },
-    { size: 58, pos: { bottom: '-12px', right: '62px'  }, delay: 0.4 },
-    { size: 44, pos: { bottom: '-6px', right: '116px' }, delay: 0.8 },
-    { size: 50, pos: { top: '8px',    right: '-8px'  }, delay: 0.3 },
-    { size: 34, pos: { top: '68px',   left: '4px'   }, delay: 0.6 },
+    { size: 74, pos: { bottom: '-8px',  right: '-4px'  }, delay: 0   },
+    { size: 56, pos: { bottom: '-12px', right: '64px'  }, delay: 0.4 },
+    { size: 42, pos: { bottom: '-4px',  right: '118px' }, delay: 0.8 },
+    { size: 50, pos: { top: '10px',     right: '-6px'  }, delay: 0.3 },
+    { size: 32, pos: { top: '72px',     left: '6px'    }, delay: 0.6 },
   ];
 
   return (
-    <div className="hidden lg:flex flex-shrink-0 items-center justify-center relative" style={{ width: '380px', height: '300px' }}>
+    <div className="hidden lg:flex flex-shrink-0 items-end justify-center relative" style={{ width: '400px', minHeight: '340px' }}>
 
       {/* Floating gold coins */}
       {coins.map((c, i) => (
@@ -306,109 +313,165 @@ function HeroLaptopPanel() {
         </motion.div>
       ))}
 
-      {/* Laptop shell */}
-      <div style={{ position: 'relative', width: '340px' }}>
+      {/* ── LAPTOP SHELL ── */}
+      <div style={{ position: 'relative', width: '355px' }}>
 
-        {/* Screen bezel */}
+        {/* ── SCREEN LID ── */}
         <div style={{
-          background: '#08080F',
-          border: '2px solid rgba(34,197,94,0.4)',
+          background: 'linear-gradient(160deg, #28283a 0%, #18182a 100%)',
+          borderRadius: '12px 12px 0 0',
+          padding: '7px 7px 0',
+          border: '1px solid rgba(255,255,255,0.1)',
           borderBottom: 'none',
-          borderRadius: '10px 10px 0 0',
-          overflow: 'hidden',
-          boxShadow: '0 0 50px rgba(34,197,94,0.18), 0 0 30px rgba(245,166,35,0.1)',
+          boxShadow: '0 0 50px rgba(34,197,94,0.22), 0 0 25px rgba(245,166,35,0.08)',
         }}>
-          {/* macOS-style title bar */}
-          <div style={{ background: '#111118', padding: '5px 8px', display: 'flex', alignItems: 'center', gap: '4px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-            {['#FF5F57','#FFBD2E','#28CA41'].map((bg, i) => (
-              <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: bg }} />
-            ))}
-            <div style={{ flex: 1, marginLeft: 8, height: 10, background: 'rgba(255,255,255,0.05)', borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ fontSize: 5, fontFamily: 'monospace', color: '#555' }}>space-trades.app</span>
-            </div>
+          {/* Webcam dot */}
+          <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: 4 }}>
+            <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#111', border: '1px solid rgba(255,255,255,0.18)', boxShadow: '0 0 4px rgba(34,197,94,0.4)' }} />
           </div>
 
-          {/* App UI content */}
-          <div style={{ padding: '8px 10px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-
-            {/* Brand header */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, paddingBottom: 6, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-              <img src="/Space_Trade_Logo.png" style={{ height: 20, width: 'auto', filter: 'drop-shadow(0 0 5px rgba(245,200,66,0.65))' }} alt="" />
-              <div>
-                <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 900, fontSize: 7.5, color: '#F5A623', textTransform: 'uppercase', letterSpacing: 1 }}>Space Trades</div>
-                <div style={{ fontFamily: 'monospace', fontSize: 5, color: '#3a3a4a', textTransform: 'uppercase', letterSpacing: 0.8 }}>CMF Compounding Engine</div>
-              </div>
-              <div style={{ marginLeft: 'auto', background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.35)', borderRadius: 3, padding: '1px 5px' }}>
-                <span style={{ fontSize: 5, fontFamily: 'monospace', color: '#22C55E', fontWeight: 700 }}>● LIVE</span>
-              </div>
-            </div>
-
-            {/* 3-col stat boxes */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 4 }}>
-              {[
-                { label: 'Total Return', value: '+178.91%', color: '#22C55E' },
-                { label: 'Risk/Trade',   value: '1.75%',    color: '#F5A623' },
-                { label: 'Portfolio',    value: '$34,782',   color: '#22C55E' },
-              ].map(s => (
-                <div key={s.label} style={{ background: `${s.color}10`, border: `1px solid ${s.color}28`, borderRadius: 4, padding: '4px 5px' }}>
-                  <div style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#555', textTransform: 'uppercase', marginBottom: 2 }}>{s.label}</div>
-                  <div style={{ fontSize: 8, fontFamily: 'monospace', fontWeight: 700, color: s.color }}>{s.value}</div>
-                </div>
+          {/* Inner screen — black panel */}
+          <div style={{
+            background: '#04040A',
+            borderRadius: '5px 5px 0 0',
+            overflow: 'hidden',
+            boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.9)',
+            border: '1px solid rgba(0,0,0,0.7)',
+            borderBottom: 'none',
+          }}>
+            {/* Title bar */}
+            <div style={{ background: '#0C0C18', padding: '4px 7px', display: 'flex', alignItems: 'center', gap: 4, borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              {['#FF5F57','#FFBD2E','#28CA41'].map((bg, i) => (
+                <div key={i} style={{ width: 5.5, height: 5.5, borderRadius: '50%', background: bg, flexShrink: 0 }} />
               ))}
+              <div style={{ flex: 1, marginLeft: 6, height: 9, background: 'rgba(255,255,255,0.04)', borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#3a3a4a' }}>space-trades.app</span>
+              </div>
             </div>
 
-            {/* Extra stat row */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 4 }}>
-              {[
-                { label: 'Real Profit',   value: '$24,782.35', color: '#22C55E' },
-                { label: 'Risk : Reward', value: '1 : 3.27',   color: '#F5A623' },
-              ].map(s => (
-                <div key={s.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: 5, fontFamily: 'monospace', color: '#555', textTransform: 'uppercase' }}>{s.label}</span>
-                  <span style={{ fontSize: 7, fontFamily: 'monospace', fontWeight: 700, color: s.color }}>{s.value}</span>
+            {/* ── APP CONTENT ── */}
+            <div style={{ padding: '7px 8px', display: 'flex', flexDirection: 'column', gap: 5 }}>
+
+              {/* App header */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, paddingBottom: 5, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                <img src="/Space_Trade_Logo.png" style={{ height: 18, width: 'auto', filter: 'drop-shadow(0 0 5px rgba(245,200,66,0.65))' }} alt="" />
+                <div>
+                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 900, fontSize: 7, color: '#F5A623', textTransform: 'uppercase', letterSpacing: 0.8 }}>Space Trades</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 4, color: '#2e2e3e', textTransform: 'uppercase' }}>CMF Compounding Engine</div>
                 </div>
-              ))}
-            </div>
+                <div style={{ marginLeft: 'auto', background: 'rgba(34,197,94,0.12)', border: '1px solid rgba(34,197,94,0.3)', borderRadius: 2, padding: '1px 4px' }}>
+                  <span style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#22C55E', fontWeight: 700 }}>● LIVE</span>
+                </div>
+              </div>
 
-            {/* Trade breakdown */}
-            <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: 5 }}>
-              <div style={{ fontSize: 5, fontFamily: 'monospace', color: '#444', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 }}>Trade Breakdown</div>
-              <div style={{ display: 'grid', gridTemplateColumns: '0.5fr 1fr 0.8fr 1fr 1fr 1fr', gap: 2, marginBottom: 3 }}>
-                {['#','DIR','LEV','ENTRY','TARGET','STATUS'].map(h => (
-                  <div key={h} style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#3a3a4a', textAlign: 'center' }}>{h}</div>
+              {/* 3 dashboard columns */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr 1fr', gap: 4 }}>
+
+                {/* Trade Sequence */}
+                <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 3, padding: '4px 5px' }}>
+                  <div style={{ fontSize: 4, fontFamily: 'monospace', color: '#3a3a4a', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 3 }}>Trade Sequence</div>
+                  <svg width="100%" height="26" viewBox="0 0 80 26" preserveAspectRatio="none">
+                    <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#22C55E" stopOpacity="0.25"/><stop offset="100%" stopColor="#22C55E" stopOpacity="0"/></linearGradient></defs>
+                    <polygon points="0,24 13,20 26,15 39,9 52,5 65,3 80,1 80,26 0,26" fill="url(#sg)" />
+                    <polyline points="0,24 13,20 26,15 39,9 52,5 65,3 80,1" fill="none" stroke="#22C55E" strokeWidth="1.5"/>
+                  </svg>
+                  <div style={{ fontSize: 8, fontFamily: 'monospace', fontWeight: 700, color: '#22C55E', marginTop: 2 }}>+178.91%</div>
+                  <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#3a3a4a', marginBottom: 2 }}>Total Projected Return</div>
+                  <div style={{ fontSize: 7, fontFamily: 'monospace', fontWeight: 700, color: '#22C55E' }}>$24,782.35</div>
+                  <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#3a3a4a', marginBottom: 2 }}>Real Profit</div>
+                  <div style={{ fontSize: 6.5, fontFamily: 'monospace', fontWeight: 700, color: '#22C55E' }}>$34,782.35</div>
+                  <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#3a3a4a' }}>Final Portfolio Value</div>
+                </div>
+
+                {/* Risk Control */}
+                <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 3, padding: '4px 5px' }}>
+                  <div style={{ fontSize: 4, fontFamily: 'monospace', color: '#3a3a4a', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 3 }}>Risk Control</div>
+                  <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 2 }}>
+                    <svg width="40" height="40" viewBox="0 0 40 40">
+                      <circle cx="20" cy="20" r="15" fill="none" stroke="rgba(34,197,94,0.12)" strokeWidth="6"/>
+                      <circle cx="20" cy="20" r="15" fill="none" stroke="#22C55E" strokeWidth="6" strokeDasharray="20 74" strokeDashoffset="27" strokeLinecap="round"/>
+                      <text x="20" y="23" textAnchor="middle" fontSize="7.5" fontFamily="monospace" fontWeight="700" fill="#22C55E">1.75%</text>
+                    </svg>
+                  </div>
+                  <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#3a3a4a', textAlign: 'center', marginBottom: 3 }}>Risk Per Trade</div>
+                  <div style={{ fontSize: 6.5, fontFamily: 'monospace', fontWeight: 700, color: '#F5A623' }}>4.21%</div>
+                  <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#3a3a4a', marginBottom: 2 }}>Max Drawdown</div>
+                  <div style={{ fontSize: 6.5, fontFamily: 'monospace', fontWeight: 700, color: '#22C55E' }}>1:3.27</div>
+                  <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#3a3a4a' }}>Risk Reward Ratio</div>
+                </div>
+
+                {/* Capital Allocation */}
+                <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 3, padding: '4px 5px' }}>
+                  <div style={{ fontSize: 4, fontFamily: 'monospace', color: '#3a3a4a', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 3 }}>Capital Alloc.</div>
+                  <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 2 }}>
+                    <svg width="40" height="40" viewBox="0 0 40 40">
+                      <circle cx="20" cy="20" r="15" fill="none" stroke="#1a3020" strokeWidth="6"/>
+                      <circle cx="20" cy="20" r="15" fill="none" stroke="#F5A623" strokeWidth="6" strokeDasharray="57 37" strokeDashoffset="27" strokeLinecap="round"/>
+                      <circle cx="20" cy="20" r="15" fill="none" stroke="#22C55E" strokeWidth="6" strokeDasharray="37 57" strokeDashoffset="-26" strokeLinecap="round"/>
+                      <text x="20" y="19" textAnchor="middle" fontSize="5" fontFamily="monospace" fill="#F5A623">$10K</text>
+                      <text x="20" y="25" textAnchor="middle" fontSize="3.5" fontFamily="monospace" fill="#555">total</text>
+                    </svg>
+                  </div>
+                  <div style={{ fontSize: 5.5, fontFamily: 'monospace', fontWeight: 700, color: '#22C55E' }}>$7,250 <span style={{ fontSize: 3.5, color: '#3a3a4a', fontWeight: 400 }}>72.5%</span></div>
+                  <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#3a3a4a', marginBottom: 2 }}>Deployed</div>
+                  <div style={{ fontSize: 5.5, fontFamily: 'monospace', fontWeight: 700, color: '#F5A623' }}>$2,750 <span style={{ fontSize: 3.5, color: '#3a3a4a', fontWeight: 400 }}>27.5%</span></div>
+                  <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#3a3a4a' }}>Sideline</div>
+                </div>
+              </div>
+
+              {/* Trade Breakdown table */}
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: 4 }}>
+                <div style={{ fontSize: 4, fontFamily: 'monospace', color: '#333', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 3 }}>Trade Breakdown</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '0.4fr 0.8fr 0.7fr 1fr 1fr 0.7fr 0.7fr 0.7fr 0.8fr', gap: 1.5, marginBottom: 2 }}>
+                  {['#','DIR','LEV','ENTRY','TARGET','SL','RISK','RWRD','STATUS'].map(h => (
+                    <div key={h} style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#2e2e3e', textAlign: 'center' }}>{h}</div>
+                  ))}
+                </div>
+                {LAPTOP_TRADES.map(([n,dir,lev,entry,target,sl,risk,rwrd,status]) => (
+                  <div key={n} style={{ display: 'grid', gridTemplateColumns: '0.4fr 0.8fr 0.7fr 1fr 1fr 0.7fr 0.7fr 0.7fr 0.8fr', gap: 1.5, marginBottom: 2 }}>
+                    <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#555', textAlign: 'center' }}>{n}</div>
+                    <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#22C55E', textAlign: 'center' }}>{dir}</div>
+                    <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#777', textAlign: 'center' }}>{lev}</div>
+                    <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#777', textAlign: 'center' }}>{entry}</div>
+                    <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#777', textAlign: 'center' }}>{target}</div>
+                    <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#EF4444', textAlign: 'center' }}>{sl}</div>
+                    <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#F5A623', textAlign: 'center' }}>{risk}</div>
+                    <div style={{ fontSize: 3.5, fontFamily: 'monospace', color: '#22C55E', textAlign: 'center' }}>{rwrd}</div>
+                    <div style={{ fontSize: 3.5, fontFamily: 'monospace', fontWeight: 700, color: status === 'WIN' ? '#22C55E' : '#F5A623', textAlign: 'center' }}>{status}</div>
+                  </div>
                 ))}
               </div>
-              {LAPTOP_TRADES.map(([n, dir, lev, entry, target, status]) => (
-                <div key={n} style={{ display: 'grid', gridTemplateColumns: '0.5fr 1fr 0.8fr 1fr 1fr 1fr', gap: 2, marginBottom: 2 }}>
-                  <div style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#555', textAlign: 'center' }}>{n}</div>
-                  <div style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#22C55E', textAlign: 'center' }}>{dir}</div>
-                  <div style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#777', textAlign: 'center' }}>{lev}</div>
-                  <div style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#777', textAlign: 'center' }}>{entry}</div>
-                  <div style={{ fontSize: 4.5, fontFamily: 'monospace', color: '#777', textAlign: 'center' }}>{target}</div>
-                  <div style={{ fontSize: 4.5, fontFamily: 'monospace', fontWeight: 700, color: status === 'WIN' ? '#22C55E' : '#F5A623', textAlign: 'center' }}>{status}</div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
 
-        {/* Keyboard base */}
-        <div style={{
-          background: 'linear-gradient(180deg, #1a1a26 0%, #0f0f1a 100%)',
-          height: 16, borderRadius: '0 0 8px 8px',
-          border: '2px solid rgba(34,197,94,0.25)', borderTop: 'none',
-          position: 'relative',
-        }}>
-          <div style={{
-            position: 'absolute', bottom: 3, left: '50%', transform: 'translateX(-50%)',
-            width: 80, height: 7, background: 'rgba(255,255,255,0.05)',
-            borderRadius: 3, border: '1px solid rgba(255,255,255,0.08)',
-          }} />
-        </div>
+        {/* ── HINGE ── */}
+        <div style={{ height: 5, background: 'linear-gradient(180deg,#222235 0%,#14141e 100%)', border: '1px solid rgba(255,255,255,0.07)', borderTop: 'none', borderBottom: 'none' }} />
 
-        {/* Stand notch */}
-        <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: 60, height: 6, background: 'linear-gradient(180deg,#1a1a26,#0f0f1a)', borderRadius: '0 0 6px 6px', border: '2px solid rgba(34,197,94,0.15)', borderTop: 'none' }} />
+        {/* ── KEYBOARD BASE ── */}
+        <div style={{
+          background: 'linear-gradient(180deg,#1e1e2e 0%,#12121c 100%)',
+          borderRadius: '0 0 10px 10px',
+          padding: '5px 8px 7px',
+          border: '1px solid rgba(255,255,255,0.07)',
+          borderTop: 'none',
+          boxShadow: '0 10px 28px rgba(0,0,0,0.75)',
+        }}>
+          {KB_ROWS.map((row, ri) => (
+            <div key={ri} style={{ display: 'flex', gap: 1.5, marginBottom: 1.5 }}>
+              {row.map((w, ki) => (
+                <div key={ki} style={{ height: 5.5, flex: w, background: 'rgba(255,255,255,0.06)', borderRadius: 1.5, border: '1px solid rgba(255,255,255,0.09)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)' }} />
+              ))}
+            </div>
+          ))}
+          {/* Space bar */}
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: 1 }}>
+            <div style={{ width: '55%', height: 5.5, background: 'rgba(255,255,255,0.06)', borderRadius: 1.5, border: '1px solid rgba(255,255,255,0.09)' }} />
+          </div>
+          {/* Touchpad */}
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
+            <div style={{ width: '38%', height: 16, background: 'rgba(255,255,255,0.04)', borderRadius: 3, border: '1px solid rgba(255,255,255,0.08)' }} />
+          </div>
         </div>
       </div>
     </div>
