@@ -25,9 +25,9 @@ export default function Navbar({ onLock, onReset, calcStats }) {
         {/* Live Stats — center */}
         {calcStats && (
           <div className="hidden md:flex items-center gap-1 flex-1 justify-center">
-            <StatPill label="Start" value={`$${formatCurrency(starting)}`} color="muted" />
+            <StatPill label="Start" value={formatCurrency(starting)} color="muted" />
             <span className="text-space-border text-xs">|</span>
-            <StatPill label="Final" value={`$${formatCurrency(finalVal)}`} color="green" />
+            <StatPill label="Final" value={formatCurrency(finalVal)} color="green" />
             <span className="text-space-border text-xs">|</span>
             <StatPill
               label="Return"
