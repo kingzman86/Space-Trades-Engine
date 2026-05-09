@@ -104,9 +104,9 @@ export default function Dashboard({ onLock }) {
               {/* Center energy glow behind logo */}
               <div style={{ position: 'absolute', top: '50%', left: '52%', transform: 'translate(-50%,-50%)', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(34,197,94,0.12) 0%, rgba(245,166,35,0.06) 40%, transparent 70%)', pointerEvents: 'none' }} />
 
-              {/* Large ghost logo — center background element */}
-              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-20%, -50%)', zIndex: 1, pointerEvents: 'none' }}>
-                <img src="/Space_Trade_Logo.png" style={{ height: '480px', width: 'auto', opacity: 0.07, filter: 'drop-shadow(0 0 100px rgba(245,200,66,1))' }} alt="" />
+              {/* Large ghost logo — sits left of the laptop so it's fully visible */}
+              <div style={{ position: 'absolute', top: '50%', left: '28%', transform: 'translate(-50%, -50%)', zIndex: 1, pointerEvents: 'none' }}>
+                <img src="/Space_Trade_Logo.png" style={{ height: '420px', width: 'auto', opacity: 0.18, filter: 'drop-shadow(0 0 80px rgba(245,200,66,0.9)) drop-shadow(0 0 40px rgba(34,197,94,0.4))' }} alt="" />
               </div>
 
               {/* === MAIN CONTENT === */}
