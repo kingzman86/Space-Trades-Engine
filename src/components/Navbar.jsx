@@ -94,7 +94,7 @@ function StatPill({ label, value, color }) {
   return (
     <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg" style={{ background: 'var(--space-mid)' }}>
       <span className="text-[10px] font-mono text-muted uppercase tracking-wider">{label}:</span>
-      <span className="num-mono text-xs font-semibold" style={{ color }}>{value}</span>
+      <span className="num-mono text-sm font-black" style={{ color, letterSpacing: '0.02em' }}>{value}</span>
     </div>
   );
 }
