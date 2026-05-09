@@ -75,6 +75,25 @@ export default function Dashboard({ onLock }) {
               className="relative z-10 border-b border-space-border overflow-hidden"
               style={{ background: '#05050A', minHeight: '460px' }}
             >
+              {/* === FLOATING GOLD COINS (full section) === */}
+              {[
+                { size: 78, style: { bottom: '12%', right: '1%'   }, delay: 0   },
+                { size: 60, style: { bottom: '4%',  right: '6%'   }, delay: 0.5 },
+                { size: 46, style: { bottom: '18%', right: '10%'  }, delay: 0.9 },
+                { size: 54, style: { top:    '8%',  right: '2%'   }, delay: 0.3 },
+                { size: 36, style: { top:    '22%', right: '15%'  }, delay: 0.7 },
+                { size: 42, style: { bottom: '8%',  left:  '2%'   }, delay: 0.4 },
+                { size: 30, style: { top:    '12%', left:  '6%'   }, delay: 1.1 },
+                { size: 34, style: { bottom: '25%', left:  '10%'  }, delay: 0.6 },
+              ].map((c, i) => (
+                <motion.div key={i} style={{ position: 'absolute', zIndex: 3, pointerEvents: 'none', ...c.style }}
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 3 + i * 0.3, repeat: Infinity, ease: 'easeInOut', delay: c.delay }}
+                >
+                  <GoldCoin size={c.size} />
+                </motion.div>
+              ))}
+
               {/* === BACKGROUND LAYERS === */}
               {/* Deep green ground glow */}
               <div style={{ position: 'absolute', bottom: -80, left: '20%', width: '800px', height: '500px', background: 'radial-gradient(ellipse, rgba(34,197,94,0.18) 0%, transparent 60%)', pointerEvents: 'none' }} />
@@ -292,26 +311,8 @@ const KB_ROWS = [
 ];
 
 function HeroLaptopPanel() {
-  const coins = [
-    { size: 74, pos: { bottom: '-8px',  right: '-4px'  }, delay: 0   },
-    { size: 56, pos: { bottom: '-12px', right: '64px'  }, delay: 0.4 },
-    { size: 42, pos: { bottom: '-4px',  right: '118px' }, delay: 0.8 },
-    { size: 50, pos: { top: '10px',     right: '-6px'  }, delay: 0.3 },
-    { size: 32, pos: { top: '72px',     left: '6px'    }, delay: 0.6 },
-  ];
-
   return (
     <div className="hidden lg:flex flex-shrink-0 items-end justify-center relative" style={{ width: '400px', minHeight: '340px' }}>
-
-      {/* Floating gold coins */}
-      {coins.map((c, i) => (
-        <motion.div key={i} style={{ position: 'absolute', ...c.pos }}
-          animate={{ y: [0, -9, 0] }}
-          transition={{ duration: 3 + i * 0.25, repeat: Infinity, ease: 'easeInOut', delay: c.delay }}
-        >
-          <GoldCoin size={c.size} />
-        </motion.div>
-      ))}
 
       {/* ── LAPTOP SHELL ── */}
       <div style={{ position: 'relative', width: '355px' }}>
