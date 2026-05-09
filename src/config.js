@@ -3,6 +3,7 @@ export const ACCESS_CODES = [
   "ST-2025-ALPHA",
   "ST-2025-BETA",
   "ST-VIP-001",
+  "ST-MEMBER-7X9K",
 ];
 
 export const DEFAULT_COINS = [
