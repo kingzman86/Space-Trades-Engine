@@ -267,7 +267,7 @@ function HeroLaptopPanel() {
   ];
 
   return (
-    <div className="hidden xl:flex flex-shrink-0 items-center justify-center relative" style={{ width: '420px', height: '310px' }}>
+    <div className="hidden lg:flex flex-shrink-0 items-center justify-center relative" style={{ width: '380px', height: '300px' }}>
 
       {/* Floating gold coins */}
       {coins.map((c, i) => (
