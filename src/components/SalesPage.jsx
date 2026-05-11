@@ -96,7 +96,7 @@ const FAQS = [
   { q: 'Do I need trading experience to use this?', a: 'Not at all. The tool is designed for all levels. Beginners use it to understand how compounding and leverage work. Experienced traders use it to plan and backtest ideas.' },
   { q: 'What happens to my data?', a: 'Everything is stored locally in your browser. Your scenarios, journal entries, and settings never leave your device unless you export them.' },
   { q: 'Is this a one-time payment?', a: 'Yes. $197 one time — no subscriptions, no recurring charges, no surprises. Pay once and the tool is yours forever.' },
-  { q: 'How do I get my access code?', a: 'Immediately after purchase, you will receive an access code by email. Enter it on this page to unlock the tool.' },
+  { q: 'How do I get my access code?', a: 'Immediately after purchase, you will receive an access code by email. Enter it on this page to unlock the tool. If you don\'t see it within a few minutes, check your spam or junk folder — it may have landed there.' },
 ];
 
 /* ─── STEPS ───────────────────────────────────── */
