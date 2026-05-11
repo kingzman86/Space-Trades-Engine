@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import {
@@ -351,9 +351,31 @@ function HowItWorksSection() {
 
 /* ─── VIDEO ───────────────────────────────────── */
 function VideoSection() {
+  const containerRef = useRef(null);
+  const iframeRef = useRef(null);
+  const playerRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && iframeRef.current && window.Vimeo) {
+            if (!playerRef.current) {
+              playerRef.current = new window.Vimeo.Player(iframeRef.current);
+            }
+            playerRef.current.play().catch(() => {});
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-16 px-4">
-      <div className="max-w-4xl mx-auto">
+    <section className="py-16 px-2">
+      <div className="max-w-6xl mx-auto">
         <motion.div variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.4 }}
           className="text-center mb-10">
           <div
@@ -367,12 +389,14 @@ function VideoSection() {
         </motion.div>
 
         <motion.div
+          ref={containerRef}
           variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.1 }}
           className="rounded-2xl overflow-hidden"
-          style={{ border: '1px solid rgba(245,166,35,0.3)', boxShadow: '0 0 40px rgba(245,166,35,0.08)' }}
+          style={{ border: '2px solid rgba(245,166,35,0.4)', boxShadow: '0 0 60px rgba(245,166,35,0.12)' }}
         >
           <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
             <iframe
+              ref={iframeRef}
               src="https://player.vimeo.com/video/1191296898?h=5919c8b179&badge=0&autopause=0&player_id=0&app_id=58479"
               frameBorder="0"
               allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
