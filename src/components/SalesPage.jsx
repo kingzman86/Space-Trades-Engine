@@ -373,15 +373,13 @@ function VideoSection() {
         >
           <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
             <iframe
-              src="https://player.vimeo.com/video/1191296898?h=5919c8b179&badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&color=F5C842"
+              src="https://player.vimeo.com/video/1191296898?h=5919c8b179&badge=0&autopause=0&player_id=0&app_id=58479"
               frameBorder="0"
               allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
               style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
               title="Space Trades Engine"
             />
-            {/* Cover Vimeo watermark in bottom-right corner */}
-            <div style={{ position: 'absolute', bottom: 0, right: 0, width: 120, height: 40, background: '#0a0a18', zIndex: 2, pointerEvents: 'none' }} />
           </div>
         </motion.div>
       </div>
