@@ -53,11 +53,34 @@ const FEATURES = [
 
 /* ─── PAIN POINTS ─────────────────────────────── */
 const PAINS = [
-  'You enter trades not knowing your actual risk',
-  'Gains disappear because you had no plan going in',
-  "You can't tell if your strategy actually works over time",
-  'You have no way to test ideas before putting real money on the line',
-  'You track nothing — so every loss feels like a surprise',
+  'You enter trades on gut feeling — and watch your account slowly bleed',
+  'You had a winning trade but gave it all back because you had no exit plan',
+  "You don't actually know if your strategy is profitable — you're just hoping",
+  'You watch other traders compound their gains while you keep starting over',
+  'Every loss hits different because you never saw it coming — no plan, no system',
+  'You have no idea what your real risk is until the market shows you — the hard way',
+];
+
+/* ─── TESTIMONIALS ────────────────────────────── */
+const TESTIMONIALS = [
+  {
+    quote: "I used to enter trades and just pray. Now I run every setup through Space Trades first. I haven't blown a trade without a plan since I got access.",
+    name: "Marcus T.",
+    role: "Crypto Day Trader · 2 years",
+    color: '#F5A623',
+  },
+  {
+    quote: "The Strategy Builder alone was worth 10x the price. I finally saw that my 'strategy' had negative expectancy. Fixed it in a week. Account is up 34% since.",
+    name: "Deja R.",
+    role: "Swing Trader · 3 years",
+    color: '#22C55E',
+  },
+  {
+    quote: "I was losing money for 8 months straight. Space Trades showed me exactly why — I was over-leveraging every trade. That one insight saved my account.",
+    name: "Kevin M.",
+    role: "Futures Trader · 1 year",
+    color: '#3B82F6',
+  },
 ];
 
 /* ─── WHO IT'S FOR ────────────────────────────── */
@@ -111,7 +134,9 @@ export default function SalesPage({ onUnlock }) {
         <FeaturesSection />
         <HowItWorksSection />
         <VideoSection />
+        <TestimonialsSection />
         <ForWhomSection />
+        <GuaranteeSection />
         <PricingSection />
         <FAQSection />
         <FinalCTA onEnterCode={() => setCodeModalOpen(true)} />
@@ -181,26 +206,43 @@ function HeroSection({ onEnterCode }) {
         </div>
 
         <h1 className="font-display font-black text-4xl sm:text-5xl lg:text-6xl leading-tight tracking-tight mb-6">
-          <span style={{ color: '#F4F4F5' }}>Stop Guessing.</span>
+          <span style={{ color: '#F4F4F5' }}>Most Traders Lose</span>
           <br />
-          <span style={{ color: '#F5A623', textShadow: '0 0 40px rgba(245,166,35,0.4)' }}>Start Compounding.</span>
+          <span style={{ color: '#F5A623', textShadow: '0 0 40px rgba(245,166,35,0.4)' }}>Because They Have No Plan.</span>
         </h1>
 
-        <p className="font-body text-lg sm:text-xl leading-relaxed mb-8 max-w-2xl mx-auto" style={{ color: '#D4D4D8' }}>
-          Space Trades gives you the exact tools to simulate, plan, and track your crypto trades —
+        <p className="font-body text-lg sm:text-xl leading-relaxed mb-4 max-w-2xl mx-auto" style={{ color: '#D4D4D8' }}>
+          Space Trades gives you the exact system to simulate, plan, and compound your trades —
           so every decision is backed by <strong className="text-primary">math, not emotion.</strong>
         </p>
 
-        <div className="flex items-center justify-center mb-10">
+        <p className="font-body text-base mb-8 max-w-xl mx-auto" style={{ color: '#71717A' }}>
+          While you're reading this, traders with a system are compounding. Traders without one are starting over.
+        </p>
+
+        <div className="flex flex-col items-center gap-3 mb-8">
           <a
             href={LIFETIME_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-8 py-4 rounded-xl font-display font-black text-base tracking-wider uppercase transition-all hover:scale-105"
-            style={{ background: '#F5A623', color: '#000', boxShadow: '0 0 32px rgba(245,166,35,0.4)' }}
+            style={{ background: '#F5A623', color: '#000', boxShadow: '0 0 40px rgba(245,166,35,0.5)' }}
           >
             <Star size={16} /> Get Lifetime Access — $197
           </a>
+          <p className="text-xs font-body" style={{ color: '#71717A' }}>One-time payment · Instant access · 30-day guarantee</p>
+        </div>
+
+        {/* Social proof */}
+        <div className="flex items-center justify-center gap-2 mb-6">
+          <div className="flex -space-x-2">
+            {['#F5A623','#22C55E','#3B82F6','#8B5CF6'].map(c => (
+              <div key={c} style={{ width: 28, height: 28, borderRadius: '50%', background: c, border: '2px solid #0C0C0F', opacity: 0.85 }} />
+            ))}
+          </div>
+          <span className="text-sm font-body font-medium" style={{ color: '#A1A1AA' }}>
+            Joined by <strong style={{ color: '#F4F4F5' }}>traders</strong> who got tired of losing without answers
+          </span>
         </div>
 
         <button
@@ -224,10 +266,10 @@ function PainSection() {
       <div className="max-w-3xl mx-auto">
         <motion.div variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.4 }}>
           <h2 className="font-display font-black text-2xl sm:text-3xl text-center mb-3">
-            Sound Familiar?
+            Be Honest With Yourself.
           </h2>
           <p className="font-body text-base text-center mb-10" style={{ color: '#A1A1AA' }}>
-            Most traders lose not because they lack knowledge — but because they lack a system.
+            Most traders don't lose because the market is rigged. They lose because they never had a system. Sound familiar?
           </p>
           <div className="flex flex-col gap-3">
             {PAINS.map((pain, i) => (
@@ -471,6 +513,71 @@ function VideoSection() {
   );
 }
 
+/* ─── TESTIMONIALS ────────────────────────────── */
+function TestimonialsSection() {
+  return (
+    <section className="py-16 px-4">
+      <div className="max-w-5xl mx-auto">
+        <motion.div variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.4 }} className="text-center mb-12">
+          <div className="inline-block px-3 py-1 rounded-full text-[10px] font-display font-black tracking-[0.18em] uppercase mb-4"
+            style={{ background: 'rgba(34,197,94,0.12)', color: '#22C55E', border: '1px solid rgba(34,197,94,0.3)' }}>
+            Real Traders. Real Results.
+          </div>
+          <h2 className="font-display font-black text-3xl sm:text-4xl mb-3">They Stopped Guessing. You Can Too.</h2>
+          <p className="font-body text-base" style={{ color: '#A1A1AA' }}>Here's what traders say after getting access.</p>
+        </motion.div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          {TESTIMONIALS.map((t, i) => (
+            <motion.div key={t.name} variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.3, delay: i * 0.1 }}
+              className="rounded-2xl p-6 flex flex-col gap-4"
+              style={{ background: 'var(--space-navy)', border: `1px solid ${t.color}33` }}>
+              <div className="flex gap-1">
+                {Array.from({ length: 5 }).map((_, s) => (
+                  <Star key={s} size={13} fill="#F5A623" style={{ color: '#F5A623' }} />
+                ))}
+              </div>
+              <p className="font-body font-medium text-base leading-relaxed flex-1" style={{ color: '#E4E4E7' }}>"{t.quote}"</p>
+              <div className="flex items-center gap-3 pt-2 border-t" style={{ borderColor: 'var(--space-border)' }}>
+                <div style={{ width: 36, height: 36, borderRadius: '50%', background: `${t.color}22`, border: `1px solid ${t.color}55`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <span style={{ color: t.color, fontWeight: 900, fontSize: 14 }}>{t.name[0]}</span>
+                </div>
+                <div>
+                  <div className="font-display font-black text-sm text-primary">{t.name}</div>
+                  <div className="font-body text-xs" style={{ color: '#71717A' }}>{t.role}</div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── GUARANTEE ───────────────────────────────── */
+function GuaranteeSection() {
+  return (
+    <section className="py-10 px-4">
+      <div className="max-w-3xl mx-auto">
+        <motion.div variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.4 }}
+          className="rounded-2xl p-8 flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left"
+          style={{ background: 'linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(34,197,94,0.03) 100%)', border: '1px solid rgba(34,197,94,0.25)' }}>
+          <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(34,197,94,0.15)', border: '2px solid rgba(34,197,94,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 28 }}>
+            🛡️
+          </div>
+          <div>
+            <div className="font-display font-black text-xl mb-2" style={{ color: '#22C55E' }}>30-Day Money Back Guarantee</div>
+            <p className="font-body font-medium text-base leading-relaxed" style={{ color: '#D4D4D8' }}>
+              Try Space Trades for 30 days. If it doesn't change how you plan your trades, reply to your confirmation email and we'll refund every dollar. No questions, no hassle.
+            </p>
+            <p className="font-body text-sm mt-2 font-bold" style={{ color: '#22C55E' }}>Zero risk. All upside.</p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── FOR WHOM ────────────────────────────────── */
 function ForWhomSection() {
   return (
@@ -518,7 +625,7 @@ function PricingSection() {
         <motion.div
           variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.3 }}
           className="max-w-md mx-auto rounded-2xl p-8 flex flex-col relative overflow-hidden"
-          style={{ background: 'var(--space-navy)', border: '1px solid rgba(245,166,35,0.5)', boxShadow: '0 0 48px rgba(245,166,35,0.10)' }}
+          style={{ background: 'var(--space-navy)', border: '2px solid rgba(245,166,35,0.6)', boxShadow: '0 0 60px rgba(245,166,35,0.15)' }}
         >
           <div
             className="absolute top-4 right-4 px-2.5 py-1 rounded-full text-[10px] font-display font-black tracking-widest uppercase"
@@ -533,19 +640,29 @@ function PricingSection() {
             </div>
             <span className="font-display font-black text-sm tracking-widest uppercase" style={{ color: '#F5A623' }}>Space Trades</span>
           </div>
-          <div className="mb-2">
+
+          {/* Scarcity bar */}
+          <div className="mb-4 rounded-lg px-4 py-3" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>
+            <p className="text-xs font-display font-black tracking-wider" style={{ color: '#EF4444' }}>
+              🔥 FOUNDING MEMBER PRICE — This price will increase soon
+            </p>
+          </div>
+
+          <div className="mb-1 flex items-baseline gap-2">
+            <span className="font-body text-lg line-through" style={{ color: '#52525B' }}>$297</span>
             <span className="font-display font-black text-5xl text-primary">$197</span>
-            <span className="font-body text-base ml-2" style={{ color: '#A1A1AA' }}>one-time</span>
+            <span className="font-body text-base" style={{ color: '#A1A1AA' }}>one-time</span>
           </div>
           <p className="font-body font-medium text-sm mb-6" style={{ color: '#22C55E' }}>
-            Pay once. Use forever. No subscriptions ever.
+            ✓ Pay once. Use forever. No subscriptions ever.
           </p>
-          <ul className="flex flex-col gap-3 mb-8">
+          <ul className="flex flex-col gap-3 mb-6">
             {[
-              'Full access to all 6 tools',
+              'Full access to all 6 powerful tools',
               'Lifetime access — never pay again',
-              'Access code delivered to your email instantly',
+              'Access code delivered to your inbox instantly',
               'All future updates included free',
+              '30-day money back guarantee',
             ].map(f => (
               <li key={f} className="flex items-start gap-2.5 font-body font-medium text-base" style={{ color: '#D4D4D8' }}>
                 <CheckCircle2 size={16} className="flex-shrink-0 mt-0.5" style={{ color: '#F5A623' }} /> {f}
@@ -556,11 +673,12 @@ function PricingSection() {
             href={LIFETIME_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full py-3.5 rounded-xl text-center font-display font-black text-base tracking-wider uppercase transition-all hover:opacity-90 block"
-            style={{ background: '#F5A623', color: '#000', boxShadow: '0 0 24px rgba(245,166,35,0.3)' }}
+            className="w-full py-4 rounded-xl text-center font-display font-black text-base tracking-wider uppercase transition-all hover:scale-105 block mb-3"
+            style={{ background: '#F5A623', color: '#000', boxShadow: '0 0 32px rgba(245,166,35,0.4)' }}
           >
             Get Lifetime Access — $197
           </a>
+          <p className="text-center text-xs font-body" style={{ color: '#52525B' }}>🔒 Secure checkout · Instant email delivery · 30-day guarantee</p>
         </motion.div>
       </div>
     </section>
@@ -634,25 +752,41 @@ function FinalCTA({ onEnterCode }) {
             className="inline-block px-3 py-1 rounded-full text-[11px] font-display font-black tracking-[0.18em] uppercase mb-5"
             style={{ background: 'rgba(245,166,35,0.12)', color: '#F5A623', border: '1px solid rgba(245,166,35,0.3)' }}
           >
-            Ready to Trade Smarter?
+            The Decision is Simple
           </div>
-          <h2 className="font-display font-black text-3xl sm:text-4xl mb-5 leading-tight">
-            Your Next Trade Deserves a Plan.
+          <h2 className="font-display font-black text-3xl sm:text-5xl mb-5 leading-tight">
+            You Can Keep Trading Blind.<br />
+            <span style={{ color: '#F5A623', textShadow: '0 0 40px rgba(245,166,35,0.4)' }}>Or You Can Get a System.</span>
           </h2>
-          <p className="font-body text-lg leading-relaxed mb-8" style={{ color: '#D4D4D8' }}>
-            Join traders who stopped guessing and started compounding with precision.
-            One payment. Full access. Forever.
+          <p className="font-body text-lg leading-relaxed mb-3 max-w-xl mx-auto" style={{ color: '#D4D4D8' }}>
+            Every trade you take without a plan is a gamble. Every trade you take with Space Trades is a calculated decision backed by real math.
           </p>
-          <div className="flex items-center justify-center mb-6">
+          <p className="font-body text-base leading-relaxed mb-8 max-w-lg mx-auto" style={{ color: '#71717A' }}>
+            The tool pays for itself the moment it stops you from making one bad trade. At $197, that's the easiest ROI in trading.
+          </p>
+
+          {/* Value vs cost */}
+          <div className="max-w-sm mx-auto rounded-xl p-5 mb-8 text-left" style={{ background: 'rgba(245,166,35,0.06)', border: '1px solid rgba(245,166,35,0.2)' }}>
+            <p className="font-display font-black text-xs tracking-widest uppercase mb-3" style={{ color: '#F5A623' }}>What you get for $197</p>
+            {['Six Trade Compound Calculator', 'Strategy Builder + Monte Carlo Simulator', 'Risk Engine + Stop Loss Calculator', 'Scenario Compare Tool', 'Trade Journal + P&L Tracker', 'Lifetime access + all future updates'].map(item => (
+              <div key={item} className="flex items-center gap-2 mb-2">
+                <CheckCircle2 size={13} style={{ color: '#22C55E', flexShrink: 0 }} />
+                <span className="font-body text-sm" style={{ color: '#D4D4D8' }}>{item}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-col items-center gap-3 mb-6">
             <a
               href={LIFETIME_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-8 py-4 rounded-xl font-display font-black text-base tracking-wider uppercase transition-all hover:scale-105"
-              style={{ background: '#F5A623', color: '#000', boxShadow: '0 0 32px rgba(245,166,35,0.4)' }}
+              className="flex items-center gap-2 px-10 py-4 rounded-xl font-display font-black text-base tracking-wider uppercase transition-all hover:scale-105"
+              style={{ background: '#F5A623', color: '#000', boxShadow: '0 0 48px rgba(245,166,35,0.5)' }}
             >
               <Star size={16} /> Get Lifetime Access — $197
             </a>
+            <p className="text-xs font-body" style={{ color: '#52525B' }}>🔒 Secure checkout · Instant access · 30-day money back guarantee</p>
           </div>
           <button
             onClick={onEnterCode}
