@@ -110,6 +110,7 @@ export default function SalesPage({ onUnlock }) {
         <SolutionSection />
         <FeaturesSection />
         <HowItWorksSection />
+        <VideoSection />
         <ForWhomSection />
         <PricingSection />
         <FAQSection />
@@ -343,6 +344,44 @@ function HowItWorksSection() {
             </motion.div>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── VIDEO ───────────────────────────────────── */
+function VideoSection() {
+  return (
+    <section className="py-16 px-4">
+      <div className="max-w-4xl mx-auto">
+        <motion.div variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.4 }}
+          className="text-center mb-10">
+          <div
+            className="inline-block px-3 py-1 rounded-full text-[10px] font-display font-black tracking-[0.18em] uppercase mb-4"
+            style={{ background: 'rgba(245,166,35,0.15)', color: '#F5A623', border: '1px solid rgba(245,166,35,0.3)' }}
+          >
+            See It In Action
+          </div>
+          <h2 className="font-display font-black text-3xl sm:text-4xl mb-3">Watch How It Works</h2>
+          <p className="font-body text-base" style={{ color: '#A1A1AA' }}>A full walkthrough of the Space Trades Compounding Engine — from setup to strategy.</p>
+        </motion.div>
+
+        <motion.div
+          variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.1 }}
+          className="rounded-2xl overflow-hidden"
+          style={{ border: '1px solid rgba(245,166,35,0.3)', boxShadow: '0 0 40px rgba(245,166,35,0.08)' }}
+        >
+          <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
+            <iframe
+              src="https://player.vimeo.com/video/1191296898?h=5919c8b179&badge=0&autopause=0&player_id=0&app_id=58479"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+              title="Space Trades Engine"
+            />
+          </div>
+        </motion.div>
       </div>
     </section>
   );
