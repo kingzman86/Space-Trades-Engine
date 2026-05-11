@@ -106,6 +106,76 @@ const STEPS = [
   { num: '03', title: 'Start Trading Smarter', desc: 'Enter your code, open the calculator, and start planning your first compound sequence.' },
 ];
 
+/* ─── LIVE PURCHASE NOTIFICATION ─────────────── */
+const BUYERS = [
+  { name: 'Marcus T.', location: 'Atlanta, GA' },
+  { name: 'Deja R.', location: 'Houston, TX' },
+  { name: 'Kevin M.', location: 'Chicago, IL' },
+  { name: 'Jordan S.', location: 'Miami, FL' },
+  { name: 'Alicia W.', location: 'Los Angeles, CA' },
+  { name: 'Tre B.', location: 'Dallas, TX' },
+  { name: 'Jasmine C.', location: 'New York, NY' },
+  { name: 'Devon H.', location: 'Detroit, MI' },
+  { name: 'Simone K.', location: 'Charlotte, NC' },
+  { name: 'Andre L.', location: 'Phoenix, AZ' },
+  { name: 'Brianna F.', location: 'Las Vegas, NV' },
+  { name: 'Chris P.', location: 'Seattle, WA' },
+];
+
+function LivePurchaseNotification() {
+  const [visible, setVisible]   = useState(false);
+  const [buyer, setBuyer]       = useState(null);
+  const [usedIdx, setUsedIdx]   = useState([]);
+
+  useEffect(() => {
+    const show = () => {
+      setUsedIdx(prev => {
+        const available = BUYERS.map((_, i) => i).filter(i => !prev.includes(i));
+        const pool = available.length > 0 ? available : BUYERS.map((_, i) => i);
+        const idx = pool[Math.floor(Math.random() * pool.length)];
+        setBuyer(BUYERS[idx]);
+        setVisible(true);
+        const newUsed = [...prev, idx].slice(-6);
+        setTimeout(() => setVisible(false), 5000);
+        return newUsed;
+      });
+    };
+
+    const initial = setTimeout(show, 8000);
+    const interval = setInterval(show, 35000);
+    return () => { clearTimeout(initial); clearInterval(interval); };
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {visible && buyer && (
+        <motion.div
+          initial={{ opacity: 0, x: -80, y: 0 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -80 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+          className="fixed bottom-6 left-4 z-50 flex items-center gap-3 rounded-xl px-4 py-3 cursor-pointer"
+          style={{ background: '#0e0e1a', border: '1px solid rgba(245,200,66,0.4)', boxShadow: '0 8px 32px rgba(0,0,0,0.5)', maxWidth: 280 }}
+          onClick={() => setVisible(false)}
+        >
+          <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'rgba(245,200,66,0.15)', border: '1px solid rgba(245,200,66,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 16 }}>
+            🚀
+          </div>
+          <div style={{ minWidth: 0 }}>
+            <p style={{ color: '#F4F4F5', fontSize: 12, fontWeight: 700, marginBottom: 1, lineHeight: 1.3 }}>
+              {buyer.name} just got access
+            </p>
+            <p style={{ color: '#71717A', fontSize: 11, fontWeight: 500 }}>
+              📍 {buyer.location} · just now
+            </p>
+          </div>
+          <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#22C55E', flexShrink: 0, boxShadow: '0 0 6px #22C55E', animation: 'pulse 1.5s infinite' }} />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 /* ─── MAIN COMPONENT ──────────────────────────── */
 export default function SalesPage({ onUnlock }) {
   const [codeModalOpen, setCodeModalOpen] = useState(() => {
@@ -146,6 +216,8 @@ export default function SalesPage({ onUnlock }) {
           </p>
         </footer>
       </div>
+
+      <LivePurchaseNotification />
 
       <AnimatePresence>
         {codeModalOpen && (
