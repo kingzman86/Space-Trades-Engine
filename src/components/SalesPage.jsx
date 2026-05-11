@@ -136,7 +136,6 @@ export default function SalesPage({ onUnlock }) {
         <VideoSection />
         <TestimonialsSection />
         <ForWhomSection />
-        <GuaranteeSection />
         <PricingSection />
         <FAQSection />
         <FinalCTA onEnterCode={() => setCodeModalOpen(true)} />
@@ -230,7 +229,7 @@ function HeroSection({ onEnterCode }) {
           >
             <Star size={16} /> Get Lifetime Access — $197
           </a>
-          <p className="text-xs font-body" style={{ color: '#71717A' }}>One-time payment · Instant access · 30-day guarantee</p>
+          <p className="text-xs font-body" style={{ color: '#71717A' }}>One-time payment · Instant access</p>
         </div>
 
         {/* Social proof */}
@@ -662,7 +661,6 @@ function PricingSection() {
               'Lifetime access — never pay again',
               'Access code delivered to your inbox instantly',
               'All future updates included free',
-              '30-day money back guarantee',
             ].map(f => (
               <li key={f} className="flex items-start gap-2.5 font-body font-medium text-base" style={{ color: '#D4D4D8' }}>
                 <CheckCircle2 size={16} className="flex-shrink-0 mt-0.5" style={{ color: '#F5A623' }} /> {f}
@@ -678,7 +676,7 @@ function PricingSection() {
           >
             Get Lifetime Access — $197
           </a>
-          <p className="text-center text-xs font-body" style={{ color: '#52525B' }}>🔒 Secure checkout · Instant email delivery · 30-day guarantee</p>
+          <p className="text-center text-xs font-body" style={{ color: '#52525B' }}>🔒 Secure checkout · Instant email delivery</p>
         </motion.div>
       </div>
     </section>
@@ -786,7 +784,7 @@ function FinalCTA({ onEnterCode }) {
             >
               <Star size={16} /> Get Lifetime Access — $197
             </a>
-            <p className="text-xs font-body" style={{ color: '#52525B' }}>🔒 Secure checkout · Instant access · 30-day money back guarantee</p>
+            <p className="text-xs font-body" style={{ color: '#52525B' }}>🔒 Secure checkout · Instant access</p>
           </div>
           <button
             onClick={onEnterCode}
