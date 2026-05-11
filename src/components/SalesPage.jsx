@@ -344,11 +344,6 @@ function HeroSection({ onEnterCode }) {
 
         {/* Social proof */}
         <div className="flex items-center justify-center gap-2 mb-6">
-          <div className="flex -space-x-2">
-            {['#F5A623','#22C55E','#3B82F6','#8B5CF6'].map(c => (
-              <div key={c} style={{ width: 28, height: 28, borderRadius: '50%', background: c, border: '2px solid #0C0C0F', opacity: 0.85 }} />
-            ))}
-          </div>
           <span className="text-sm font-body font-medium" style={{ color: '#A1A1AA' }}>
             Joined by <strong style={{ color: '#F4F4F5' }}>traders</strong> who got tired of losing without answers
           </span>
