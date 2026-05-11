@@ -407,6 +407,12 @@ input[type="range"].gain-slider::-webkit-slider-thumb {
   background: linear-gradient(160deg, #EEF1F7 0%, #E8ECF5 100%);
 }
 
+/* Force readable text in HowItWorks light mode */
+[data-theme="light"] .how-it-works-card p,
+[data-theme="light"] .how-it-works-card span,
+[data-theme="light"] .how-it-works-card li,
+[data-theme="light"] .how-it-works-card h2 { color: #18181B !important; }
+
 /* ─── MATRIX THEME ────────────────────────────── */
 [data-theme="matrix"] {
   --space-black:  #000000;

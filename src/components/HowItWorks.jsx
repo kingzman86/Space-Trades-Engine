@@ -179,7 +179,7 @@ function SectionCard({ section, index }) {
     <motion.div
       variants={fadeUp} initial="initial" animate="animate"
       transition={{ duration: 0.3, delay: index * 0.04 }}
-      className="rounded-2xl p-6"
+      className="rounded-2xl p-6 how-it-works-card"
       style={{ background: bg, border: `1px solid ${border}` }}
     >
       {/* Title row */}
