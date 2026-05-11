@@ -114,7 +114,7 @@ export default function HowItWorks({ onGoToCalculator }) {
         variants={fadeUp} initial="initial" animate="animate"
         transition={{ duration: 0.35 }}
         className="rounded-2xl p-8 text-center"
-        style={{ background: 'linear-gradient(160deg, #1a0f00 0%, #0C0C0F 60%)', border: '1px solid rgba(245,166,35,0.2)' }}
+        style={{ background: 'var(--space-navy, var(--space-mid))', border: '1px solid rgba(245,166,35,0.2)' }}
       >
         <div
           className="inline-block px-3 py-1 rounded-full text-[10px] font-display font-black tracking-[0.18em] uppercase mb-4"
@@ -140,7 +140,7 @@ export default function HowItWorks({ onGoToCalculator }) {
         variants={fadeUp} initial="initial" animate="animate"
         transition={{ duration: 0.35, delay: 0.5 }}
         className="rounded-2xl p-8 text-center"
-        style={{ background: 'linear-gradient(160deg, #0a1a0a 0%, #0C0C0F 60%)', border: '1px solid rgba(34,197,94,0.2)' }}
+        style={{ background: 'var(--space-navy, var(--space-mid))', border: '1px solid rgba(34,197,94,0.2)' }}
       >
         <div
           className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-4"
@@ -197,7 +197,7 @@ function SectionCard({ section, index }) {
 
       {/* Body */}
       {body && (
-        <p className="font-body font-medium text-base leading-relaxed mb-3" style={{ color: '#E4E4E7' }}>
+        <p className="font-body font-medium text-base leading-relaxed mb-3" style={{ color: 'var(--star-white)' }}>
           {body}
         </p>
       )}
@@ -211,7 +211,7 @@ function SectionCard({ section, index }) {
                 className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-display font-black mt-0.5"
                 style={{ background: `${color}30`, color, border: `1px solid ${color}66` }}
               >{i + 1}</span>
-              <span className="font-body font-semibold text-base leading-relaxed" style={{ color: '#E4E4E7' }}>{step}</span>
+              <span className="font-body font-semibold text-base leading-relaxed" style={{ color: 'var(--star-white)' }}>{step}</span>
             </li>
           ))}
         </ol>
@@ -224,15 +224,15 @@ function SectionCard({ section, index }) {
             <li key={i} className="flex items-start gap-2.5">
               <span className="mt-2.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: color }} />
               {boldBullets && Array.isArray(b) ? (
-                <span className="font-body font-semibold text-base leading-relaxed" style={{ color: '#E4E4E7' }}>
+                <span className="font-body font-semibold text-base leading-relaxed" style={{ color: 'var(--star-white)' }}>
                   <strong className="text-primary font-black">{b[0]}</strong> — {b[1]}
                 </span>
               ) : mixedBullet && Array.isArray(b) ? (
-                <span className="font-body font-semibold text-base leading-relaxed" style={{ color: '#E4E4E7' }}>
+                <span className="font-body font-semibold text-base leading-relaxed" style={{ color: 'var(--star-white)' }}>
                   {b[0]}<strong className="text-primary font-black">{b[1]}</strong>{b[2]}
                 </span>
               ) : (
-                <span className="font-body font-semibold text-base leading-relaxed" style={{ color: '#E4E4E7' }}>{b}</span>
+                <span className="font-body font-semibold text-base leading-relaxed" style={{ color: 'var(--star-white)' }}>{b}</span>
               )}
             </li>
           ))}
@@ -247,7 +247,7 @@ function SectionCard({ section, index }) {
             {extraSection.items.map((item, i) => (
               <li key={i} className="flex items-start gap-2.5">
                 <span className="mt-2.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: color }} />
-                <span className="font-body font-semibold text-base leading-relaxed" style={{ color: '#E4E4E7' }}>{item}</span>
+                <span className="font-body font-semibold text-base leading-relaxed" style={{ color: 'var(--star-white)' }}>{item}</span>
               </li>
             ))}
           </ul>
@@ -256,7 +256,7 @@ function SectionCard({ section, index }) {
 
       {/* Footer paragraph */}
       {footer && (
-        <p className="font-body font-medium text-base leading-relaxed mb-2" style={{ color: '#E4E4E7' }}>{footer}</p>
+        <p className="font-body font-medium text-base leading-relaxed mb-2" style={{ color: 'var(--star-white)' }}>{footer}</p>
       )}
 
       {/* Italic note */}

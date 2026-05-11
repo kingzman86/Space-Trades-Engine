@@ -124,7 +124,7 @@ body {
   border-color: var(--candle-green);
   box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
 }
-.input-gold::placeholder { color: var(--muted-text); }
+.input-gold::placeholder { color: #888899; }
 textarea.input-gold { line-height: 1.6; }
 
 /* select arrow */

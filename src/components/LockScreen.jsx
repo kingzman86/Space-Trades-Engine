@@ -143,6 +143,7 @@ export default function LockScreen({ onUnlock }) {
               onKeyDown={e => e.key === 'Enter' && handleUnlock()}
               autoFocus
               disabled={loading || showRocket}
+              style={{ color: '#F4F4F5', caretColor: '#F5C842', fontSize: '16px', letterSpacing: '0.2em' }}
             />
           </motion.div>
 
