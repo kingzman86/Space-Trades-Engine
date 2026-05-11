@@ -170,7 +170,7 @@ export default function FAQ({ onGoToCalculator, onGoToHowItWorks }) {
       {/* Search */}
       <div
         className="flex items-center gap-3 px-5 py-4 rounded-xl border"
-        style={{ background: '#1C1C24', borderColor: '#3F3F50' }}
+        style={{ background: 'var(--space-mid)', borderColor: 'var(--space-border)' }}
       >
         <Search size={18} style={{ color: 'var(--muted-text)', flexShrink: 0 }} />
         <input
@@ -197,16 +197,16 @@ export default function FAQ({ onGoToCalculator, onGoToHowItWorks }) {
           transition={{ duration: 0.25, delay: ci * 0.03 }}
           className="rounded-2xl overflow-hidden"
           style={{
-            border: cat.highlight ? `2px solid ${cat.color}88` : `1px solid #3A3A48`,
+            border: cat.highlight ? `2px solid ${cat.color}88` : `1px solid var(--space-border)`,
             background: cat.highlight
-              ? `linear-gradient(135deg, ${cat.color}18 0%, #16161C 60%)`
-              : '#16161C',
+              ? `linear-gradient(135deg, ${cat.color}18 0%, var(--space-navy) 60%)`
+              : 'var(--space-navy)',
           }}
         >
           {/* Category header */}
           <div
             className="flex items-center gap-4 px-6 py-5 border-b"
-            style={{ borderColor: '#2E2E3A' }}
+            style={{ borderColor: 'var(--space-border)' }}
           >
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -220,10 +220,10 @@ export default function FAQ({ onGoToCalculator, onGoToHowItWorks }) {
                   <span className="font-display font-black text-xs tracking-[0.15em] uppercase" style={{ color: cat.color }}>
                     {cat.label} —
                   </span>
-                  <span className="font-display font-black text-base" style={{ color: '#F4F4F5' }}>{cat.sublabel}</span>
+                  <span className="font-display font-black text-base" style={{ color: 'var(--star-white)' }}>{cat.sublabel}</span>
                 </div>
               ) : (
-                <span className="font-display font-black text-base" style={{ color: '#F4F4F5' }}>{cat.label}</span>
+                <span className="font-display font-black text-base" style={{ color: 'var(--star-white)' }}>{cat.label}</span>
               )}
               <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--muted-text)' }}>
                 {cat.questions.length} question{cat.questions.length !== 1 ? 's' : ''}
@@ -237,7 +237,7 @@ export default function FAQ({ onGoToCalculator, onGoToHowItWorks }) {
               const id    = `${cat.id}-${qi}`;
               const isOpen = openId === id;
               return (
-                <div key={qi} style={{ borderBottom: qi < cat.questions.length - 1 ? '1px solid #2E2E3A' : 'none' }}>
+                <div key={qi} style={{ borderBottom: qi < cat.questions.length - 1 ? '1px solid var(--space-border)' : 'none' }}>
                   <button
                     onClick={() => toggle(id)}
                     className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left transition-all"
@@ -245,7 +245,7 @@ export default function FAQ({ onGoToCalculator, onGoToHowItWorks }) {
                     onMouseEnter={e => { if (!isOpen) e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
                     onMouseLeave={e => { if (!isOpen) e.currentTarget.style.background = 'transparent'; }}
                   >
-                    <span className="font-body font-bold text-base leading-snug" style={{ color: '#F4F4F5' }}>
+                    <span className="font-body font-bold text-base leading-snug" style={{ color: 'var(--star-white)' }}>
                       {item.q}
                     </span>
                     <ChevronDown
