@@ -350,61 +350,121 @@ function HowItWorksSection() {
 }
 
 /* ─── VIDEO ───────────────────────────────────── */
+const VIDEO_BADGES_LEFT  = [
+  { icon: '⚡', label: '6-Trade Sequences' },
+  { icon: '🛡️', label: 'Risk Engine' },
+  { icon: '📊', label: 'Live Charts' },
+];
+const VIDEO_BADGES_RIGHT = [
+  { icon: '📈', label: 'Strategy Builder' },
+  { icon: '🔄', label: 'Compound Growth' },
+  { icon: '💰', label: 'Trade Journal' },
+];
+
 function VideoSection() {
   const containerRef = useRef(null);
-  const iframeRef = useRef(null);
-  const playerRef = useRef(null);
+  const iframeRef    = useRef(null);
+  const playerRef    = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && iframeRef.current && window.Vimeo) {
-            if (!playerRef.current) {
-              playerRef.current = new window.Vimeo.Player(iframeRef.current);
-            }
-            playerRef.current.play().catch(() => {});
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && iframeRef.current && window.Vimeo) {
+          if (!playerRef.current) playerRef.current = new window.Vimeo.Player(iframeRef.current);
+          playerRef.current.play().catch(() => {});
+        }
+      });
+    }, { threshold: 0.4 });
     if (containerRef.current) observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section className="py-16 px-2">
-      <div className="max-w-6xl mx-auto">
-        <motion.div variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.4 }}
-          className="text-center mb-10">
-          <div
-            className="inline-block px-3 py-1 rounded-full text-[10px] font-display font-black tracking-[0.18em] uppercase mb-4"
-            style={{ background: 'rgba(245,166,35,0.15)', color: '#F5A623', border: '1px solid rgba(245,166,35,0.3)' }}
-          >
+    <section className="py-20 px-4 overflow-hidden relative">
+      {/* Background spotlight */}
+      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 900, height: 500, background: 'radial-gradient(ellipse, rgba(245,200,66,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+      <div className="max-w-5xl mx-auto relative">
+        {/* Header */}
+        <motion.div variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.4 }} className="text-center mb-12">
+          <div className="inline-block px-3 py-1 rounded-full text-[10px] font-display font-black tracking-[0.18em] uppercase mb-4"
+            style={{ background: 'rgba(245,166,35,0.15)', color: '#F5A623', border: '1px solid rgba(245,166,35,0.3)' }}>
             See It In Action
           </div>
           <h2 className="font-display font-black text-3xl sm:text-4xl mb-3">Watch How It Works</h2>
           <p className="font-body text-base" style={{ color: '#A1A1AA' }}>A full walkthrough of the Space Trades Compounding Engine — from setup to strategy.</p>
         </motion.div>
 
-        <motion.div
-          ref={containerRef}
-          variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.1 }}
-          className="rounded-2xl overflow-hidden"
-          style={{ border: '2px solid rgba(245,166,35,0.4)', boxShadow: '0 0 60px rgba(245,166,35,0.12)' }}
-        >
-          <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
-            <iframe
-              ref={iframeRef}
-              src="https://player.vimeo.com/video/1191296898?h=5919c8b179&badge=0&autopause=0&player_id=0&app_id=58479"
-              frameBorder="0"
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-              title="Space Trades Engine"
-            />
+        {/* Laptop + floating badges */}
+        <motion.div ref={containerRef} variants={fadeUp} initial="initial" whileInView="animate" viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }} style={{ position: 'relative' }}>
+
+          {/* Floating badges — left */}
+          <div className="hidden xl:flex flex-col gap-3" style={{ position: 'absolute', left: -152, top: '18%', zIndex: 10 }}>
+            {VIDEO_BADGES_LEFT.map((b, i) => (
+              <motion.div key={b.label} animate={{ y: [0, -7, 0] }} transition={{ duration: 3 + i * 0.6, repeat: Infinity, ease: 'easeInOut', delay: i * 0.9 }}
+                style={{ background: 'rgba(10,10,24,0.85)', border: '1px solid rgba(245,200,66,0.35)', borderRadius: 10, padding: '8px 14px', display: 'flex', alignItems: 'center', gap: 8, backdropFilter: 'blur(8px)', whiteSpace: 'nowrap', boxShadow: '0 4px 20px rgba(0,0,0,0.4)' }}>
+                <span style={{ fontSize: 15 }}>{b.icon}</span>
+                <span style={{ color: '#F5C842', fontSize: 11, fontWeight: 700, letterSpacing: '0.05em' }}>{b.label}</span>
+              </motion.div>
+            ))}
           </div>
+
+          {/* Floating badges — right */}
+          <div className="hidden xl:flex flex-col gap-3" style={{ position: 'absolute', right: -152, top: '18%', zIndex: 10 }}>
+            {VIDEO_BADGES_RIGHT.map((b, i) => (
+              <motion.div key={b.label} animate={{ y: [0, -7, 0] }} transition={{ duration: 3 + i * 0.6, repeat: Infinity, ease: 'easeInOut', delay: i * 0.9 + 0.5 }}
+                style={{ background: 'rgba(10,10,24,0.85)', border: '1px solid rgba(245,200,66,0.35)', borderRadius: 10, padding: '8px 14px', display: 'flex', alignItems: 'center', gap: 8, backdropFilter: 'blur(8px)', whiteSpace: 'nowrap', boxShadow: '0 4px 20px rgba(0,0,0,0.4)' }}>
+                <span style={{ fontSize: 15 }}>{b.icon}</span>
+                <span style={{ color: '#F5C842', fontSize: 11, fontWeight: 700, letterSpacing: '0.05em' }}>{b.label}</span>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Laptop floating animation */}
+          <motion.div animate={{ y: [0, -5, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}>
+
+            {/* Screen lid */}
+            <div style={{ background: 'linear-gradient(180deg, #0c0c1e 0%, #10102a 100%)', borderRadius: '14px 14px 0 0', padding: '14px 14px 8px', border: '2px solid #252540', borderBottom: 'none', position: 'relative', boxShadow: '0 0 70px rgba(245,200,66,0.18), 0 0 140px rgba(245,200,66,0.07), inset 0 1px 0 rgba(255,255,255,0.04)' }}>
+              {/* Camera */}
+              <div style={{ textAlign: 'center', marginBottom: 10 }}>
+                <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#1c1c38', border: '1px solid #38385a', display: 'inline-block' }} />
+              </div>
+              {/* Video screen */}
+              <div style={{ borderRadius: 6, overflow: 'hidden', background: '#000' }}>
+                <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
+                  <iframe ref={iframeRef}
+                    src="https://player.vimeo.com/video/1191296898?h=5919c8b179&badge=0&autopause=0&player_id=0&app_id=58479"
+                    frameBorder="0"
+                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                    title="Space Trades Engine"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Hinge bar */}
+            <div style={{ background: 'linear-gradient(180deg, #1c1c34 0%, #20203c 100%)', height: 7, width: '106%', marginLeft: '-3%', borderLeft: '2px solid #252540', borderRight: '2px solid #252540' }} />
+
+            {/* Keyboard deck */}
+            <div style={{ background: 'linear-gradient(180deg, #13132a 0%, #0e0e1e 100%)', borderRadius: '0 0 14px 14px', border: '2px solid #252540', borderTop: '1px solid #32324e', padding: '10px 18px 14px', width: '106%', marginLeft: '-3%' }}>
+              <div style={{ display: 'flex', gap: 3, marginBottom: 4 }}>
+                {Array.from({ length: 13 }).map((_, i) => (
+                  <div key={i} style={{ height: 5, flex: 1, background: '#1a1a36', borderRadius: 2, border: '1px solid #26264a' }} />
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: 3, marginBottom: 8 }}>
+                {Array.from({ length: 11 }).map((_, i) => (
+                  <div key={i} style={{ height: 5, flex: 1, background: '#1a1a36', borderRadius: 2, border: '1px solid #26264a' }} />
+                ))}
+              </div>
+              <div style={{ width: '28%', height: 18, borderRadius: 5, background: '#18183a', border: '1px solid #28284a', margin: '0 auto', boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.5)' }} />
+            </div>
+
+            {/* Gold glow under laptop */}
+            <div style={{ height: 24, background: 'radial-gradient(ellipse at center, rgba(245,200,66,0.18) 0%, transparent 70%)', marginTop: 2, filter: 'blur(10px)' }} />
+          </motion.div>
         </motion.div>
       </div>
     </section>
